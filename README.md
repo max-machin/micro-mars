@@ -11,8 +11,8 @@
 
 # Table des matières
 
-- [1. Le Projet](#projet)
-- [Workflow Git](#workflow)
+- [Le Projet](#le-projet)
+- [Workflow Git](#workflow-git)
 - [Organisation, architecture](#orga)
 - [API's](#API)
 - [Endpoints](#endpoints)
@@ -20,14 +20,15 @@
 - [Installation](#installation)
 - [Contributions](#contributing)
 
-##[1. Le Projet](#projet)
+## Le Projet
 
 Mise en place d'une application en architecture micro-services, pour l'occasion de la foire de Marseille. 
 
 - technos : NestJs, Kafka
 - Durée : 15 jours
 
-##[2. Workflow Git](#workflow)
+## Workflow Git
+
 
 ![Infrastructure plan](http://res.cloudinary.com/imrenagi-com/image/upload/v1494871114/Untitled_cwhlwy.png)
 # Contributions
