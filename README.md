@@ -10,7 +10,7 @@
     <a href="[https://github.com/othneildrew/Best-README-Template](https://fr.wikipedia.org/wiki/Microservices)"><strong>Explore the doc »</strong></a>
     <br />
     <br />
-    ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+    ![NestJS]
     
     [![Kafka][Kafka]][Kafka]
   </p>
