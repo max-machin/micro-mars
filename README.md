@@ -12,9 +12,9 @@
     <br />
   </p>
 </div>
-[![Next][Next.js]][Next-url]  
-# micro-mars
-Projet scolaire : site internet en architecture micro-services pour la foire de Marseille  
+![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)      
+# micro-mars  
+Projet scolaire : site internet en architecture micro-services pour la foire de Marseille    
 
 ### 1. Architecture micro-services   
 
