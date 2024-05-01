@@ -10,9 +10,7 @@
     <a href="[https://github.com/othneildrew/Best-README-Template](https://fr.wikipedia.org/wiki/Microservices)"><strong>Explore the doc »</strong></a>
     <br />
     <br />
-    ![NestJS]
-    
-    [![Kafka][Kafka]][Kafka]
+    [![Next][Next.js]][Next-url]
   </p>
 </div>
 # micro-mars
