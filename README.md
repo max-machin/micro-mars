@@ -14,7 +14,7 @@
 - [Le Projet](#le-projet)
 - [Workflow Git](#workflow-git)
 - [Organisation architecture](#organisation-architecture)
-- [API's](#API)
+- [Services](#services)
 - [Endpoints](#endpoints)
 - [Base de données](#BDD)
 - [Installation](#installation)
@@ -108,6 +108,15 @@ App
 │           └── server.js
 └── docker-compose.yml
 ```
+
+## Services
+
+### Service authentication 
+Ce service fournit plusieurs chemin d'API concernant l'authentication des utilisateurs sur l'application.
+| Methode | Chemin                               | Description                                   | Scope |
+|---------|--------------------------------------|-----------------------------------------------|-------|
+| POST    | /service-authentication/oauth/token  | Get new access token and refresh access token | ui    |
+| POST    | /service-authentication/oauth/logout | Logout to revoke access token                 | ui    |
 
 
 # Contributions
