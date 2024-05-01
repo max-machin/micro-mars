@@ -55,7 +55,7 @@ service-mail , service-authentification, service-media .... etc
 Une fois l’Epic créer depuis le tableau Jira, il est maintenant possible de passer à la création de branche Git.
 
 Afin de maintenir un lien entre L’Epic Jira et la branche crée, il est nécessaire de créer la branche avec le nom de l’Epic lié.
-```bash
+```Shell
 git checkout -b [nom de l'epic]
  ```
 
