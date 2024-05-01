@@ -56,10 +56,11 @@ Une fois l’Epic créer depuis le tableau Jira, il est maintenant possible de p
 
 Afin de maintenir un lien entre L’Epic Jira et la branche crée, il est nécessaire de créer la branche avec le nom de l’Epic lié.
 ```Shell
-git checkout -b [nom de l'epic]
+git checkout -b [nom-epic]
  ```
 
 ### Création des tâches
+
 Une fois l’Epic créer, il est possible de lié un / plusieurs ticket(s) enfant (tâche). Ces tâches peuvent permettre de découper le travail à faire pour un service qui serait trop conséquent exemple : 
 
 Epic = service-mail
@@ -69,10 +70,9 @@ Tâche 2 : service-mail-withMedia
 
 #### Commit
 Depuis la branche concernant l’Epic lié, il faut indiquer le ticket “tâche” concerné par le développement dans le commit : 
-
-
-
+```bash
 git commit -m "micro-mail-forgotPassword : ajout de la fonction de cryptage du mot de passe"
+```
 
 ![Infrastructure plan](http://res.cloudinary.com/imrenagi-com/image/upload/v1494871114/Untitled_cwhlwy.png)
 # Contributions
