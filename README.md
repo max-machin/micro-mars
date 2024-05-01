@@ -5,7 +5,7 @@
   <h3 align="center">Micro Mars</h3>
 
   <p align="center">
-    Mise en place d'un micro-service
+    Mise en place d'une architecture micro-services
     <br />
     <a href="[https://github.com/othneildrew/Best-README-Template](https://fr.wikipedia.org/wiki/Microservices)"><strong>Explore the doc »</strong></a>
     <br />
@@ -13,7 +13,7 @@
   </p>
 </div>
 ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)      
-# micro-mars  
+
 Projet scolaire : site internet en architecture micro-services pour la foire de Marseille    
 
 ### 1. Architecture micro-services   
