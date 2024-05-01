@@ -7,6 +7,7 @@
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
 
+![Infrastructure plan](http://res.cloudinary.com/imrenagi-com/image/upload/v1494871114/Untitled_cwhlwy.png)
 
 *Ce projet est réalisé dans un cadre scolaire.*
 
@@ -18,12 +19,7 @@
 - [Endpoints](#endpoints)
 - [Base de données](#BDD)
 - [Installation](#installation)
-- [Recommended configurations](#recommended-configurations)
-- [Custom configurations](#custom-configurations)
-- [Updating](#updating)
-- [Uninstallation](#uninstallation)
-- [Contributing](#contributing)
-- [License](#license)
+- [Contributions](#contributing)
 
 # Usage
 
@@ -224,18 +220,12 @@ Want to uninstall and revert back to the old style? No issues (sob). Please feel
 gem uninstall colorls
 ```
 
-# Contributing
+# Contributions
 
 [(Back to top)](#table-of-contents)
 
-Your contributions are always welcome! Please have a look at the [contribution guidelines](CONTRIBUTING.md) first. :tada:
+Merci à Alizéa et Tchessi pour les contributions. :tada:
 
-# License
-
-[(Back to top)](#table-of-contents)
-
-
-The MIT License (MIT) 2017 - [Athitya Kumar](https://github.com/athityakumar/). Please have a look at the [LICENSE.md](LICENSE.md) for more details.
 
 
 
