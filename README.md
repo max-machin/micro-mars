@@ -6,6 +6,7 @@
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
 <a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
+[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/)
 
 *Ce projet est réalisé dans un cadre scolaire.*
 
