@@ -74,7 +74,42 @@ Depuis la branche concernant l’Epic lié, il faut indiquer le ticket “tâche
 git commit -m "micro-mail-forgotPassword : ajout de la fonction de cryptage du mot de passe"
 ```
 
+## Organisation architecture
+
+Le projet est organisé en micr-services. Le schéma ci-dessous résume le fonctionnement d'une telle architecture : 
+
 ![Infrastructure plan](http://res.cloudinary.com/imrenagi-com/image/upload/v1494871114/Untitled_cwhlwy.png)
+
+L'arboresence de fichiers pour une application en micro-services peut ressembler à cet exemple : 
+```bash
+App
+├── services/
+│   ├── data/
+│   │   └── MongoDb/
+│   ├── MongoDb/
+│   │   └── Dockerfile
+│   ├── MySql/
+│   │   ├── Dockerfile
+│   │   └── my.cnf
+│   ├── service-authentication/
+│   │   └── src/
+│   │       ├── dumbData.json
+│   │       ├── mongoApp.js
+│   │       ├── Dockerfile
+│   │       ├── package.json
+│   │       └── server.js
+│   └── service-users/
+│       └── src/
+│           ├── dumbData.json
+│           ├── mongoApp.js (ou MySqlApp.js)
+│           ├── db.json
+│           ├── Dockerfile
+│           ├── package.json
+│           └── server.js
+└── docker-compose.yml
+```
+
+
 # Contributions
 
 [(Back to top)](#table-of-contents)
