@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from './user.entity';
+import { Product } from './product.entity';
 
 @Entity()
 export class Exponent {
@@ -18,4 +19,6 @@ export class Exponent {
     @OneToMany(() => User, (user) => user.exponent)
     users: User[]; 
 
+    @OneToMany(() => Product, (product) => product.exponent)
+    products: Product[];
 }
