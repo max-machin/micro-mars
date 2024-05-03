@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { User } from 'entities/user.entity';
+import { Exponent } from 'entities/exponent.entity';
 
 @Module({
     imports: [
@@ -14,11 +16,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             username: 'root',
             password: '',
             database: 'micro-mars-general-db',
-            entities: [
-                __dirname + './repository/*.entity{.ts,.js}',
-            ],
             synchronize: true,
+            entities: [
+                __dirname + '/../**/*.entity{.ts,.js}',
+            ],
         }),
+        TypeOrmModule.forFeature([
+            User,
+            Exponent
+        ]),
     ],
     controllers: [AppController],
     providers: [AppService],
