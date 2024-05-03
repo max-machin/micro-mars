@@ -2,23 +2,26 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'ty
 import { Product } from './product.entity';
 
 @Entity()
-export class ProductCategory {
-
+export class ProductAttachment {
+    
     // Identifiant
     @PrimaryGeneratedColumn()
     id: number;
 
     // Attributs 
     @Column({length: 85, nullable: false, unique: true})
-    name: string;
+    attachment_url: string;
+
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    creation_date: string;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     last_update_date: string;
 
     // Relations 
     /**
-     * Une catégorie appartient à plusieurs produits 
+     * Un attachment peut appartenir à un seul produit
     */
-    @OneToMany(() => Product, (product) => product.category)
-    products: Product[];
+   @ManyToOne(() => Product, (product) => product.productAttachments)
+   product: Product[];
 }

@@ -15,6 +15,9 @@ export class UserRole {
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     last_update_date: string;
 
+    /**
+     * Un rôle peut appartenir à plusieurs utilisateurs  
+    */
     @OneToMany(() => User, (user) => user.userRole)
     users: User[];
 }

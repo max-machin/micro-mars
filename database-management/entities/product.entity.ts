@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Exponent } from './exponent.entity';
 import { CommandProduct } from './commandProduct.entity';
+import { ProductCategory } from './productCategory.entity';
+import { ProductAttachment } from './productAttachment.entity';
 
 @Entity()
 export class Product {
@@ -41,4 +43,16 @@ export class Product {
     */
     @OneToMany(() => CommandProduct, (commandProduct) => commandProduct.product)
     public commandProduct : CommandProduct[];
+
+    /**
+     * Un produit peut appartenir à une seule catégorie 
+    */
+    @ManyToOne(() => ProductCategory, (productCategory) => productCategory.products)
+    category: ProductCategory[];
+
+    /**
+     * Un produit peut posséder plusieurs photos
+    */
+    @OneToMany(() => ProductAttachment, (productAttachment) => productAttachment.product)
+    productAttachments: ProductAttachment[];
 }
