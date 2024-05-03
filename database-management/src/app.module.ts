@@ -4,9 +4,6 @@ import { AppService } from './app.service';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { User } from 'entities/user.entity';
-import { Exponent } from 'entities/exponent.entity';
-
 @Module({
     imports: [
         TypeOrmModule.forRoot({
@@ -20,11 +17,9 @@ import { Exponent } from 'entities/exponent.entity';
             entities: [
                 __dirname + '/../**/*.entity{.ts,.js}',
             ],
+            migrations: ['/src/db/migrations/*{.ts,.js}'],
+            migrationsTableName: "migrations_historic",
         }),
-        TypeOrmModule.forFeature([
-            User,
-            Exponent
-        ]),
     ],
     controllers: [AppController],
     providers: [AppService],

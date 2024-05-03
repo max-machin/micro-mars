@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'ty
 import { User } from './user.entity';
 import { Product } from './product.entity';
 import { ExponentActivity } from './exponentActivity.entity';
+import { ExponentAttachment } from './exponentAttachment.entity';
 
 @Entity()
 export class Exponent {
@@ -47,4 +48,10 @@ export class Exponent {
     */
      @ManyToOne(() => ExponentActivity, (exponentActivity) => exponentActivity.exponent)
      activity: ExponentActivity[];
+
+    /**
+     * Un exposant peut envoyer plusieurs documents
+    */
+    @OneToMany(() => ExponentAttachment, (exponentAttachment) => exponentAttachment.exponent)
+    exponentAttachments: ExponentAttachment[];
 }
