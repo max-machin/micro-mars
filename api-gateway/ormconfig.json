@@ -1,0 +1,11 @@
+{
+    "type": "mysql",
+    "host": "mysql",
+    "port": 3306,
+    "username": "root",
+    "password": "",
+    "database": "micro-mars-general-db",
+    "synchronize": true,
+    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "logging": true
+  }
