@@ -1,0 +1,64 @@
+version: '3'
+services:
+  api-gateway:
+    networks:
+      - kafka-kafdrop_default
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+
+  service-command:
+    networks:
+      - kafka-kafdrop_default
+    build:
+      context: ./service-command
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+
+  service-auth:
+    networks:
+      - kafka-kafdrop_default
+    build:
+      context: ./service-auth
+      dockerfile: Dockerfile
+
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./api-gateway/.env
+    volumes:
+      - dbData:/var/lib/mysql
+    networks:
+      - kafka-kafdrop_default
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - mysql
+    networks:
+      - kafka-kafdrop_default
+  
+volumes:
+  dbData:
+
+networks:
+  kafka-kafdrop_default:
+    external: true
