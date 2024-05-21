@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { Exponent } from 'src/exponent/exponent.entity';
-import { CommandProduct } from 'src/command-product/command-product.entity';
-import { ProductCategory } from 'src/product-category/product-category.entity';
-import { ProductAttachment } from 'src/product-attachment/product-attachment.entity';
+import { Exponent } from '../exponent/exponent.entity';
+import { CommandProduct } from '../command-product/command-product.entity';
+import { ProductCategory } from '../product-category/product-category.entity';
+import { ProductAttachment } from '../product-attachment/product-attachment.entity';
 
 @Entity()
 export class Product {

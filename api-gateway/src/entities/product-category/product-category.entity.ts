@@ -1,27 +1,24 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { Product } from 'src/product/product.entity';
+import { Product } from '../product/product.entity';
 
 @Entity()
-export class ProductAttachment {
-    
+export class ProductCategory {
+
     // Identifiant
     @PrimaryGeneratedColumn()
     id: number;
 
     // Attributs 
     @Column({length: 85, nullable: false, unique: true})
-    attachment_url: string;
-
-    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
-    creation_date: string;
+    name: string;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     last_update_date: string;
 
     // Relations 
     /**
-     * Un attachment peut appartenir à un seul produit
+     * Une catégorie appartient à plusieurs produits 
     */
-   @ManyToOne(() => Product, (product) => product.productAttachments)
-   product: Product[];
+    @OneToMany(() => Product, (product) => product.category)
+    products: Product[];
 }

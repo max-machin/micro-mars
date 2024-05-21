@@ -1,4 +1,4 @@
-import { Exponent } from 'src/exponent/exponent.entity';
+import { Exponent } from '../exponent/exponent.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity()

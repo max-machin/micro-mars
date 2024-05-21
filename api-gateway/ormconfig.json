@@ -6,6 +6,6 @@
     "password": "",
     "database": "micro-mars-general-db",
     "synchronize": true,
-    "entities": ["dist/**/*.entity{.ts,.js}"],
+    "entities": ["dist/entities/**/*.entity{.ts,.js}"],
     "logging": true
   }

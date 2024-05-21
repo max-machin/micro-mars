@@ -1,5 +1,5 @@
-import { Command } from "src/command/command.entity";
-import { Product } from "src/product/product.entity";
+import { Command } from "../command/command.entity";
+import { Product } from "../product/product.entity";
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 

@@ -1,3 +1,4 @@
+name: micro-mars-services
 version: '3'
 services:
   api-gateway:
@@ -8,6 +9,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    env_file:
+      - ./api-gateway/.env
     depends_on:
       - mysql
 
@@ -33,8 +36,10 @@ services:
       - "3306:3306"
     env_file:
       - ./api-gateway/.env
+    command: --init-file /data/application/init.sql  
     volumes:
       - dbData:/var/lib/mysql
+      - ./api-gateway/init.sql:/data/application/init.sql
     networks:
       - kafka-kafdrop_default
     healthcheck:
