@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { Command } from 'src/command/command.entity';
-import { Exponent } from 'src/exponent/exponent.entity';
-import { UserRole } from 'src/user-role/user-role.entity';
+import { Command } from '../command/command.entity';
+import { Exponent } from '../exponent/exponent.entity';
+import { UserRole } from '../user-role/user-role.entity';
 
 @Entity()
 export class User {

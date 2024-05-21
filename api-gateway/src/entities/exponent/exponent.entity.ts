@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { ExponentActivity } from 'src/exponent-activity/exponent-activity.entity';
-import { ExponentAttachment } from 'src/exponent-attachment/exponent-attachment.entity';
-import { Product } from 'src/product/product.entity';
-import { User } from 'src/user/user.entity';
+import { ExponentActivity } from '../exponent-activity/exponent-activity.entity';
+import { ExponentAttachment } from '../exponent-attachment/exponent-attachment.entity';
+import { Product } from '../product/product.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Exponent {

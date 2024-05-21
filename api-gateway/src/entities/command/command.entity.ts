@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from 'typeorm';
-import { User } from 'src/user/user.entity';
-import { CommandProduct } from 'src/command-product/command-product.entity';
+import { User } from '../user/user.entity';
+import { CommandProduct } from '../command-product/command-product.entity';
 
 @Entity()
 export class Command {
