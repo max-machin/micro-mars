@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateOrderRequest } from './create-order-request.dto';
@@ -12,7 +13,7 @@ export class AppController {
   }
 
   @Post()
-  createOrder(@Body() CreateOrderRequest: CreateOrderRequest) {
-    this.appService.createOrder(CreateOrderRequest)     
+  createOrder(@Body() createOrderRequest: CreateOrderRequest) {
+    this.appService.createOrder(createOrderRequest)     
   }
 }
