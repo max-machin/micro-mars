@@ -13,6 +13,14 @@ services:
       - ./api-gateway/.env
     depends_on:
       - mysql
+  
+  service-mailer:
+    build:
+      context: ./mailing
+      dockerfile: Dockerfile
+    restart: "always"
+    networks:
+      - kafka-kafdrop_default
 
   service-command:
     networks:

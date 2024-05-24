@@ -1,9 +1,13 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { OrderCreatedEvent } from './order-created.event';
-
+import { ClientKafka } from '@nestjs/microservices';
 @Injectable()
 export class AppService {
+  constructor(
+    @Inject('MAILING_SERVICE') private readonly mailingClient: ClientKafka,
+  ) {}
+
   getHello(): string {
     return 'Hello World!';
   }
@@ -16,5 +20,12 @@ export class AppService {
 
     console.log(str1 + str2 + str3 + str4)
     return (str1 + str2 + str3 + str4)
+  }
+
+  createOrder(orderCreatedEvent: OrderCreatedEvent) {
+    this.mailingClient.emit(
+      'order_created',
+      new OrderCreatedEvent(orderCreatedEvent.orderId, orderCreatedEvent.userId, orderCreatedEvent.email, orderCreatedEvent.price),
+    );
   }
 }
