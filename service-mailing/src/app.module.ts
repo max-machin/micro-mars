@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-// import { ClientKafka } from '@nestjs/microservices';
+import { ConfigModule } from '@nestjs/config';
 import { MailingService } from './app.service';
 import { MailingController } from './app.controller';
 
 @Module({
-  imports: [],
-  controllers: [MailingController],
+  imports: [ConfigModule.forRoot()],  controllers: [MailingController],
   providers: [MailingService],
 })
 export class MailingModule  {}
