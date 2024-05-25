@@ -11,11 +11,9 @@ import { UserRole } from '../user-role/user-role.entity';
 
 @Entity()
 export class User {
-  // Identifiant
   @PrimaryGeneratedColumn()
   id: number;
 
-  // Attributs
   @Column({ length: 55, nullable: false })
   firstname: string;
 
@@ -25,7 +23,7 @@ export class User {
   @Column({ length: 85, nullable: false, unique: true })
   email: string;
 
-  @Column({ length: 85, nullable: false, unique: true })
+  @Column({ length: 85, nullable: false })
   password: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
@@ -34,24 +32,12 @@ export class User {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   last_update_date: string;
 
-  // Relations
-  /**
-   * Relation User => Exponent
-   * La relation avec l'exposant peut être nulle dans le cas ou il s'agit d'un client. Ce dernier n'a
-   * pas de lien avec une entreprise de la foire.
-   */
   @ManyToOne(() => Exponent, (exponent) => exponent.users, { nullable: true })
-  exponent: Exponent[];
+  exponent: Exponent;
 
-  /**
-   * Un client peut passer plusieurs commandes
-   */
   @OneToMany(() => Command, (command) => command.user)
-  command: Command[];
+  commands: Command[];
 
-  /**
-   * Un utilisateur ne possède qu'un rôle
-   */
   @ManyToOne(() => UserRole, (userRole) => userRole.users, { nullable: false })
-  userRole: UserRole[];
+  userRole: UserRole;
 }

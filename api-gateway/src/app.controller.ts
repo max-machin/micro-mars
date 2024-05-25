@@ -1,19 +1,24 @@
-/* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { AppService } from './app.service';
-import { CreateOrderRequest } from './create-order-request.dto';
+import { Controller, Get, Post, Body, Inject } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    @Inject('COMMAND_SERVICE') private readonly clientKafka: ClientKafka,
+  ) {}
+
+  async onModuleInit() {
+    this.clientKafka.subscribeToResponseOf('command_topic');
+    await this.clientKafka.connect();
+  }
+
+  @Post('send')
+  sendMessage(@Body() message: any) {
+    return this.clientKafka.send('command_topic', message);
+  }
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
-  }
-
-  @Post()
-  createOrder(@Body() createOrderRequest: CreateOrderRequest) {
-    this.appService.createOrder(createOrderRequest)     
+    return 'Hello World!';
   }
 }

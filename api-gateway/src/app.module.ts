@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     ClientsModule.register([
       {
         name: 'COMMAND_SERVICE',
@@ -14,18 +15,17 @@ import { ConfigModule } from '@nestjs/config';
         options: {
           client: {
             clientId: 'service-command',
-            brokers: ['kafka:29092'],
+            brokers: [process.env.KAFKA_BROKER],
           },
           consumer: {
-            groupId: 'service-command-consumer'
-          }
-        }
-      }
+            groupId: 'service-command-consumer',
+          },
+        },
+      },
     ]),
-    ConfigModule.forRoot({ isGlobal: true }),
-    DatabaseModule, 
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}  
+export class AppModule {}
