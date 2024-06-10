@@ -37,6 +37,20 @@ services:
     build:
       context: ./service-auth
       dockerfile: Dockerfile
+  
+  service-front-gallery:
+    build:
+      context: ./front-gallery
+      dockerfile: Dockerfile
+    env_file:
+      - ./front-gallery/.env
+    ports:
+      - 5173:5173
+    volumes:
+      - ./front-gallery:/app
+      - /app/node_modules
+    command: npm run dev
+
 
   mysql:
     image: mysql:latest
