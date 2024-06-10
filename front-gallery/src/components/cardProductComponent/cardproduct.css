@@ -1,0 +1,312 @@
+.card {
+    width: 18rem;
+    margin: 12px;
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(.27,1.02,.69,1.16);
+    background-color: #ffffff15;
+    overflow: hidden;
+    height: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h4 {
+    font-size: 1.2rem;
+    margin: 0px;
+    padding: 0px 12px;
+    margin: 0px;
+    text-align: left;
+}
+
+
+.cardGallery .card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.img-product {
+    width: 100%;
+    height: 170px;
+    min-height: 170px;
+    object-fit: cover;
+    transition: all 0.3s cubic-bezier(.27,1.02,.69,1.16);
+}
+
+@keyframes minimize-img-product {
+    from {
+        height: 170px;
+    }
+    to {
+        height: 0px;
+    }
+
+}
+
+.img-produc-detail-open{
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    /* on block l'animation a 0 px */
+    animation: minimize-img-product 0.3s ease-in-out forwards;
+}
+
+.img-exponent {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    top: 160px;
+    z-index: 1;
+    left : 12px;
+    object-fit: cover;
+    object-position: 50% 50%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccd5ae;
+}
+
+.card-content {
+    padding: 4px 12px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 130px;
+}
+
+@keyframes minimize-content-card {
+    from {
+        max-height: 130px;
+    }
+    to {
+        max-height: 50px;
+    }
+    
+}
+
+.card-content-detail-open {
+    padding: 4px 12px 12px 12px;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    justify-content: space-between;
+    /* on block l'animation a 0 px */
+    animation: minimize-content-card 0.3s ease-in-out forwards;
+}
+
+
+.card-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 0px;
+    text-align: left;
+    gap: 0px;
+    background-color: #ccd5ae2f;
+    max-height: 40px;
+    border-radius: 8px;
+}
+
+.card-header > div {
+    width: 100%;
+}
+
+.exponent-name {
+    font-size: 0.7rem;
+    padding: 0px;
+    margin: 0px;
+    font-weight: 300;
+}
+
+.card hr {
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid #ccd5ae33;
+}
+
+
+.card-content h3 {
+    font-size: 1.2rem;
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+    margin: 0px;
+    text-align: left;
+}
+
+.detail-card-open-modale {
+    width: 100%;
+    min-height: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 12px;
+}
+
+.img-product-detail {
+    object-fit: cover;
+    width: clamp(300px, 100%, 600px);
+    height: clamp(300px, 100%, 600px);
+    object-position: 50% 50%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.info-product-detail {
+    padding: 8px;
+    border: 1px solid #ccd5ae33;
+    border-radius: 10px;
+    flex: 1;
+    max-height: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: auto;
+
+}
+.footer-card-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-product-detail p {
+    flex: 1;
+}
+
+.product-price-detail {
+    font-size: 1.2rem;
+    font-weight: 500;
+    min-width: 44px;
+}
+
+.counter-product span {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 0px 8px;
+    min-width: 44px;
+    text-align: center;
+
+}
+
+.footer-card-detail button {
+    border: none;
+    color: white;
+}
+
+.button-control-product{
+    background-color: #adb4a2;
+}
+
+.button-add-panier {
+    margin: 0px 12px;
+    border: none;
+    background-color: #769543;
+}
+
+.footer-card-detail button:hover:not(:disabled) {
+    background-color: #5f7d3b;
+}
+
+.footer-card-detail button:active {
+    background-color: #4c6430;
+    border: none;
+}
+
+.footer-card-detail button:focus {
+    outline: none;
+}
+
+.gallery-similar-product {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background-color: #ffffff15;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-height: 100vh;
+    overflow-x: scroll;
+}
+
+.exponent-products{
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    padding: 12px;
+
+}
+
+.product-exponent {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(.27,1.02,.69,1.16);
+}
+
+.product-exponent:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+}
+
+.product-exponent img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.product-exponent-footer {
+    height: 0px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(.27,1.02,.69,1.16);
+    z-index: 1;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #ccd5ae85;
+    backdrop-filter: blur(10px);
+}
+
+.product-exponent:hover .product-exponent-footer{
+    padding: 8px;
+    min-height: 24px;
+    height: auto;
+}
+
+.product-exponent-footer span:first-child {
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    max-width: 70%;
+
+}
+
+
+@media screen and (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+    
+    .img-product-detail {
+        width: 100%;
+        height: 300px;
+    }
+    
+}
+
+
