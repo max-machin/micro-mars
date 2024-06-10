@@ -3,7 +3,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateOrderRequest } from './create-order-request.dto';
 
-@Controller()
+@Controller('order')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
