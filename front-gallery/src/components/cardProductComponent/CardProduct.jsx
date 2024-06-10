@@ -17,14 +17,8 @@ import "./cardproduct.css";
     }
  */
 
-const CardProduct = ({
-  product,
-  onCardClick,
-  isDetail = false,
-  elementStyle = {},
-}) => {
+const CardProduct = ({ product, onCardClick }) => {
   const cardRef = React.useRef(null);
-  const [nbProduct, setNbProduct] = React.useState(1);
 
   const handleClick = (e) => {
     // Récupérer la position de la card par rapport à la fenêtre
@@ -47,91 +41,28 @@ const CardProduct = ({
     <div
       className="card background-element"
       ref={cardRef}
-      onClick={(e) => {
-        isDetail === false ? onCardClick(handleClick(e)) : null;
-      }}
-      style={elementStyle}
+      onClick={(e) => onCardClick(handleClick(e))}
     >
       <img
-        className={isDetail ? "img-produc-detail-open" : "img-product"}
+        className="img-product"
         src={product.product_picture}
         alt="Image du produit"
       />
-      <div
-        className={isDetail ? "card-content-detail-open" : "card-content"}
-        elementIsdetail={isDetail}
-      >
-        {!isDetail && (
-          <>
-            <div className="card-header">
-              <img
-                className="img-exponent"
-                src={product.exponent_picture}
-                alt="Image de l'exposant"
-              />
-              <h3>{product.product_name}</h3>
-            </div>
-            <span>{product.price} €</span>
-            <hr />
-            <span className="exponent-name">
-              Exposé par {product.exponent_name}
-            </span>
-          </>
-        )}
+      <div className="card-content">
+        <div className="card-header">
+          <img
+            className="img-exponent"
+            src={product.exponent_picture}
+            alt="Image de l'exposant"
+          />
+          <h3>{product.product_name}</h3>
+        </div>
+        <span>{product.price} €</span>
+        <hr />
+        <span className="exponent-name">
+          Exposé par {product.exponent_name}
+        </span>
       </div>
-      {isDetail && (
-        <>
-          <div className="detail-card-open-modale">
-            <img
-              className="img-product-detail"
-              src={product.product_picture}
-              alt="Image du produit"
-            />
-            <div className="info-product-detail background-element">
-              <div className="card-header">
-                <img
-                  className="img-exponent"
-                  src={product.exponent_picture}
-                  alt="Image de l'exposant"
-                />
-                <h3>{product.product_name}</h3>
-              </div>
-              <p>{product.desc}</p>
-              <span className="product-price-detail">{product.price} €</span>
-              <span className="exponent-name">
-                Exposé par {product.exponent_name}
-              </span>
-              <div className="footer-card-detail">
-                <div className="counter-product">
-                  <button
-                    onClick={() => {
-                      if (nbProduct > 1) {
-                        setNbProduct(nbProduct - 1);
-                      } else {
-                        setNbProduct(1);
-                      }
-                    }}
-                    disabled={nbProduct === 1}
-                    className="button-control-product"
-                  >
-                    -
-                  </button>
-                  <span>{nbProduct}</span>
-                  <button
-                    onClick={() => setNbProduct(nbProduct + 1)}
-                    className="button-control-product"
-                  >
-                    +
-                  </button>
-                  <button className="button-add-panier">
-                    Ajouter au panier
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
     </div>
   );
 };
