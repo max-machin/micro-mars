@@ -1,16 +1,15 @@
 #root {
-max-width: 100%;
-box-sizing: border-box;
-margin: 0;
-padding: 0;
-display: flex;
-flex-direction: column;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 #root div {
   box-sizing: border-box;
 }
-
 
 .logo {
   height: 6em;
@@ -41,7 +40,7 @@ flex-direction: column;
   height: 40vh;
 }
 
-.modale-detail-product{
+.modale-detail-product {
   position: fixed;
   z-index: 100;
   background-color: #00000049;
@@ -49,7 +48,7 @@ flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor:alias;
+  cursor: alias;
 }
 
 .cardGallery {
@@ -59,9 +58,7 @@ flex-direction: column;
   padding: 1em;
   align-self: center;
   max-width: 1280px;
-
 }
-
 
 @keyframes logo-spin {
   from {
@@ -78,11 +75,10 @@ flex-direction: column;
   }
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
   .cardGallery {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 }
-

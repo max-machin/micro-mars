@@ -83,10 +83,10 @@ const CardProductDetail = ({ product, onCardClick, isDetail = false, elementStyl
                             <div key={index} className="product-exponent"
                             onClick={() => {
                                 setNbProduct(1)
-                                setElementProduct(product)}}
-                            >
+                                setElementProduct(product)}
+                            }>
                                 <img src={product.product_picture} alt="Image du produit" />
-                               <div className="product-exponent-footer">
+                                <div className="product-exponent-footer">
                                     <span>{product.product_name}</span>
                                     <span>{product.price} €</span></div> 
                                 </div>

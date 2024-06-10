@@ -1,35 +1,35 @@
 #headerApp {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 12px;
-    background-color: #ffffff31;
-    position: fixed;
-    width: 100%;
-    z-index: 99;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.253);
-    position: fixed;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 12px;
+  background-color: #ffffff31;
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.253);
+  position: fixed;
 }
 
 #headerApp div:first-child {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 1rem;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
 }
 
 #headerApp div:first-child span {
-    font-size: 1.8rem;
-    font-weight: 500;
-    color: #000;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #000;
 }
 
 #logo-header {
-    height: 50px;
-    left: 12px;
-    object-fit: cover;
+  height: 50px;
+  left: 12px;
+  object-fit: cover;
 }
