@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -6,8 +6,12 @@ import * as mocks from "./mocks/mockProducts";
 import CardProduct from "./components/cardProductComponent/CardProduct";
 import HeaderComponent from "./components/Header/HeaderComponent";
 import CardProductDetail from "./components/cardProductComponent/CardProductDetail";
+import { ContextMain, ContextMainProvider } from "./context/ContextMain";
 
 function App() {
+  const useContextMain = useContext(ContextMain);
+  //récupérer les fonctions du context ContextMainProvider
+
   const dataProduct = mocks.dataProduct;
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [elementDetail, setElementDetail] = useState({});
@@ -34,7 +38,6 @@ function App() {
         },
       }));
     }, 133);
-    // on récupère le exponent_name et on filytre tout les produits qui ont le même exponent_name
   };
 
   const closeModale = (e) => {
@@ -51,6 +54,15 @@ function App() {
         <h1>Gallery</h1>
         <p>Click on the cards to see more details</p>
       </div>
+      <button
+        className="test-button"
+        onClick={() => {
+          console.log(useContextMain);
+          useContextMain.addProductToOrder(dataProduct[0], 1);
+        }}
+      >
+        Test
+      </button>
       {detailIsOpen && (
         <div
           className="modale-detail-product"
@@ -90,9 +102,6 @@ function App() {
           />
         ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
