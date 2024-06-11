@@ -1,4 +1,5 @@
-import { Controller } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Controller, Get } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { MailingService } from './app.service';
 
@@ -19,5 +20,10 @@ export class MailingController {
     } catch (error) {
       console.error(`Error processing email for ${message.email}`, error.stack);
     }
+  }
+
+  @Get()
+  getHello(): string {
+    return 'Hello World!';
   }
 }

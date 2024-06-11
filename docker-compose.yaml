@@ -22,6 +22,16 @@ services:
     networks:
       - kafka-kafdrop_default
 
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    restart: "always"
+    networks:
+      - kafka-kafdrop_default
+
   service-command:
     networks:
       - kafka-kafdrop_default

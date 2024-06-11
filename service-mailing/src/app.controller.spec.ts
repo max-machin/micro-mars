@@ -1,22 +1,23 @@
+/* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MailingController } from './app.controller';
+import { MailingService } from './app.service';
 
 describe('AppController', () => {
-  let appController: AppController;
+  let mailingController: MailingController;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
+      controllers: [MailingController],
+      providers: [MailingService],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    mailingController = app.get<MailingController>(MailingController);
   });
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(mailingController.getHello()).toBe('Hello World!');
     });
   });
 });

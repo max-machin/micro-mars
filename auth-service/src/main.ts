@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { MailingModule } from './app.module';
+import { AuthModule } from './auth.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    MailingModule,
+    AuthModule,
     {
       transport: Transport.KAFKA,
       options: {
@@ -13,7 +13,7 @@ async function bootstrap() {
           brokers: ['kafka:29092'],
         },
         consumer: {
-          groupId: 'mailing-consumer',
+          groupId: 'auth-consumer',
         },
       },
     },
