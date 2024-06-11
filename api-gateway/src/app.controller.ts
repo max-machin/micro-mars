@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Inject } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 
-@Controller()
+@Controller('order')
 export class AppController {
   constructor(
     @Inject('COMMAND_SERVICE') private readonly clientKafka: ClientKafka,
