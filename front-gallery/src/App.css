@@ -60,6 +60,36 @@
   max-width: 1280px;
 }
 
+.button-secondary {
+  background-color: #adb4a2;
+}
+
+.button-primary {
+  margin: 0px 12px;
+  border: none;
+  background-color: #769543;
+}
+
+.button-primary:hover:not(:disabled) {
+  background-color: #5f7d3b;
+  border: none;
+}
+
+.button-secondary:hover:not(:disabled) {
+  background-color: #5f7d3b;
+}
+
+.button-primary:active,
+.button-secondary:active {
+  background-color: #4c6430;
+  border: none;
+}
+
+.button-primary:focus,
+.button-secondary:focus {
+  outline: none;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

@@ -52,7 +52,7 @@ function App() {
         <h1>Gallery</h1>
         <p>Click on the cards to see more details</p>
       </div>
-      {/* <PanierComponent isOpen={false} /> */}
+      <PanierComponent isOpen={false} />
       {detailIsOpen && (
         <div
           className="modale-detail-product"
