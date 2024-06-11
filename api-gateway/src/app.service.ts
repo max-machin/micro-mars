@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateOrderRequest } from './create-order-request.dto';
 import { ClientKafka } from '@nestjs/microservices';
@@ -14,10 +15,11 @@ export class AppService {
     return 'Hello World!';
   }
 
-  createOrder ({ userId, price}: CreateOrderRequest) {
+  createOrder ({ orderId ,userId, email, price}: CreateOrderRequest) {
     this.commandClient.emit(
       'order_created', 
-      new OrderCreatedEvent('123', userId, price),
+      new OrderCreatedEvent(orderId, userId, email, price),
     )
   }
 }
+
