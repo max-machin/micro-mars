@@ -90,6 +90,40 @@
   outline: none;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 2px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #769543;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #658531;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #658531;
+}
+::-webkit-scrollbar-track {
+  background: #66666600;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #66666600;
+}
+::-webkit-scrollbar-track:active {
+  background: #33333300;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
