@@ -7,11 +7,9 @@ import CardProduct from "./components/cardProductComponent/CardProduct";
 import HeaderComponent from "./components/Header/HeaderComponent";
 import CardProductDetail from "./components/cardProductComponent/CardProductDetail";
 import { ContextMain, ContextMainProvider } from "./context/ContextMain";
+import PanierComponent from "./components/panier/PanierComponent";
 
 function App() {
-  const useContextMain = useContext(ContextMain);
-  //récupérer les fonctions du context ContextMainProvider
-
   const dataProduct = mocks.dataProduct;
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [elementDetail, setElementDetail] = useState({});
@@ -54,15 +52,7 @@ function App() {
         <h1>Gallery</h1>
         <p>Click on the cards to see more details</p>
       </div>
-      <button
-        className="test-button"
-        onClick={() => {
-          console.log(useContextMain);
-          useContextMain.addProductToOrder(dataProduct[0], 1);
-        }}
-      >
-        Test
-      </button>
+      <PanierComponent isOpen={false} />
       {detailIsOpen && (
         <div
           className="modale-detail-product"
@@ -71,7 +61,7 @@ function App() {
             left: 0,
             width: "100%",
             height: "100%",
-            zIndex: 1000,
+            zIndex: 100,
           }}
           onClick={(e) => closeModale(e)}
         >
