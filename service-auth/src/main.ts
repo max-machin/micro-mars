@@ -1,27 +1,23 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { Transport, MicroserviceOptions } from '@nestjs/microservices';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { AuthModule } from './auth.module';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
+    AuthModule,
     {
       transport: Transport.KAFKA,
       options: {
         client: {
           brokers: ['kafka:29092'],
-          clientId: 'nestjs-consumer-client',
         },
         consumer: {
-          groupId: 'auth-service-consumer',
-          heartbeatInterval: 3000,
-          sessionTimeout: 10000,
+          groupId: 'auth-consumer',
         },
       },
     },
   );
-
-  await app.listen();
+  app.listen();
 }
-
 bootstrap();

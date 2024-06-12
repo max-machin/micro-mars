@@ -1,19 +1,16 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-  private readonly users = [
-    { user: 'testUser', password: 'testPass' }, // Utilisateur de test
-    // Vous pouvez ajouter plus d'utilisateurs ici ou récupérer les utilisateurs depuis une base de données
-  ];
+  private users: any[] = [];
 
-  async validateUser(user: string, password: string): Promise<boolean> {
-    // Recherchez l'utilisateur dans la liste des utilisateurs
-    const foundUser = this.users.find(
-      (u) => u.user === user && u.password === password,
-    );
-
-    // Retournez true si l'utilisateur est trouvé et les informations d'identification sont correctes
-    return !!foundUser;
+  async processUserRegistration(
+    username: string,
+    email: string,
+  ): Promise<void> {
+    const user = { username, email, registeredAt: new Date() };
+    this.users.push(user);
+    console.log(`User ${username} has been registered with email ${email}`);
   }
 }

@@ -1,24 +1,44 @@
-import { Controller, Get, Post, Body, Inject } from '@nestjs/common';
-import { ClientKafka } from '@nestjs/microservices';
+/* eslint-disable prettier/prettier */
+import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { AppService } from './app.service';
+import { CreateOrderRequest } from './create-order-request.dto';
+// import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+// import { ClientKafka } from '@nestjs/microservices';
 
-@Controller('order')
+@Controller('api')
 export class AppController {
   constructor(
-    @Inject('COMMAND_SERVICE') private readonly clientKafka: ClientKafka,
+    private readonly appService: AppService,
+    // @Inject('AUTH_SERVICE') private readonly kafkaClient: ClientKafka,
+    // private readonly jwtService: JwtService
   ) {}
 
-  async onModuleInit() {
-    this.clientKafka.subscribeToResponseOf('command_topic');
-    await this.clientKafka.connect();
+  // async onModuleInit() {
+  //   this.kafkaClient.subscribeToResponseOf('user_registered');
+  //   await this.kafkaClient.connect();
+  // }
+
+  @Post('order')
+  createOrder(@Body() createOrderRequest: CreateOrderRequest) {
+    this.appService.createOrder(createOrderRequest);
   }
 
-  @Post('send')
-  sendMessage(@Body() message: any) {
-    return this.clientKafka.send('command_topic', message);
+  @Post('register')
+  async register(
+    @Body() body: { username: string; password: string; email: string },
+  ) {
+    return this.appService.register(body.username, body.password, body.email);
   }
 
-  @Get()
-  getHello(): string {
-    return 'Hello World!';
+  @Post('login')
+  async login(@Body() body: { username: string; password: string }) {
+    return this.appService.login(body.username, body.password);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Post('protected')
+  getHello(@Request() req): string {
+    return `Hello ${req.user.username}`;
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
@@ -6,26 +7,20 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @EventPattern('auth-topic')
-  async handleAuthEvent(@Payload() message: any) {
-    console.log('Auth event received:', message.value);
-
+  @EventPattern('user_registered')
+  async handleUserRegistered(@Payload() message: any) {
+    console.log(`Received message from Kafka: ${JSON.stringify(message)}`);
     try {
-      // Extraire les informations de l'utilisateur du message
-      const { user, password } = message.value;
-
-      // Valider les informations de l'utilisateur
-      const isValid = await this.authService.validateUser(user, password);
-
-      if (isValid) {
-        console.log(`User ${user} authenticated successfully`);
-        // Vous pouvez ajouter d'autres actions à effectuer après une validation réussie
-      } else {
-        console.log(`Authentication failed for user ${user}`);
-        // Vous pouvez ajouter d'autres actions à effectuer après un échec de validation
-      }
+      await this.authService.processUserRegistration(
+        message.username,
+        message.email,
+      );
+      console.log(`User registration processed for ${message.username}`);
     } catch (error) {
-      console.error('Error handling auth event:', error);
+      console.error(
+        `Error processing user registration for ${message.username}`,
+        error.stack,
+      );
     }
   }
 }

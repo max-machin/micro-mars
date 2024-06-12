@@ -1,9 +1,13 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
@@ -26,19 +30,23 @@ import { ConfigModule } from '@nestjs/config';
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: 'auth-service',
             brokers: ['kafka:29092'],
           },
           consumer: {
-            groupId: 'auth-service-consumer',
+            groupId: 'auth-consumer',
           },
         },
       },
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: 'secretKey',
+      signOptions: { expiresIn: '60m' },
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {}
