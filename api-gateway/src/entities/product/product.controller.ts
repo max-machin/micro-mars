@@ -28,7 +28,7 @@ export class ProductController {
                 exponent_name: product.exponent.name,
                 exponent_id: product.exponent.id,
                 exponent_picture: product.exponent.exponentAttachments[0].attachment_url,
-                product_pictures: product.productAttachments[0].attachment_url,
+                product_picture: product.productAttachments[0].attachment_url,
             }
         });
 
