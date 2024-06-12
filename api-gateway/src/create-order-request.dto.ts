@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
-export class CreateOrderRequest  {
-
-    orderId: string;
-    userId: string;
-    email: string;
-    price: number;
-    
-    }
+export class UserAuthDto {
+    userId: number;
+}
+  
+export class ProductOrderDto {
+    productId: number;
+    quantity: number;
+}
+  
+export class CreateOrderRequest {
+    userAuth: UserAuthDto;
+    productsOrder: ProductOrderDto[];
+}
     

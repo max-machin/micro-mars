@@ -15,11 +15,14 @@ export class AppService {
     return 'Hello World!';
   }
 
-  createOrder ({ orderId ,userId, email, price}: CreateOrderRequest) {
+  createOrder(createOrderRequest: CreateOrderRequest) {
+
+    console.log('je suis dans le service app api-gateway : ' + createOrderRequest);
+
     this.commandClient.emit(
-      'order_created', 
-      new OrderCreatedEvent(orderId, userId, email, price),
-    )
+      'order_created',
+      new OrderCreatedEvent(createOrderRequest.userAuth, createOrderRequest.productsOrder)
+    );
   }
 }
 

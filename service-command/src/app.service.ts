@@ -13,19 +13,13 @@ export class AppService {
   }
 
   handleOrderCreated(orderCreatedEvent: OrderCreatedEvent){
-    const str1 = 'N° de commande : ' + orderCreatedEvent.orderId
-    const str2 = ', effectuée par le client : ' + orderCreatedEvent.userId
-    const str3 = ', email : ' + orderCreatedEvent.email
-    const str4 = ', Prix de la commande : ' + orderCreatedEvent.price
-
-    console.log(str1 + str2 + str3 + str4)
-    return (str1 + str2 + str3 + str4)
+    console.log("orderCreated : " , orderCreatedEvent);
   }
 
   createOrder(orderCreatedEvent: OrderCreatedEvent) {
     this.mailingClient.emit(
       'order_created',
-      new OrderCreatedEvent(orderCreatedEvent.orderId, orderCreatedEvent.userId, orderCreatedEvent.email, orderCreatedEvent.price),
+      new OrderCreatedEvent(orderCreatedEvent.userAuth, orderCreatedEvent.productsOrder),
     );
   }
 }
