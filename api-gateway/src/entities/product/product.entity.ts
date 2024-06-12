@@ -48,7 +48,7 @@ export class Product {
      * Un produit peut appartenir à une seule catégorie 
     */
     @ManyToOne(() => ProductCategory, (productCategory) => productCategory.products)
-    category: ProductCategory[];
+    category: ProductCategory;
 
     /**
      * Un produit peut posséder plusieurs photos
