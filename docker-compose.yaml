@@ -1,27 +1,6 @@
 name: micro-mars-services
 version: '3'
 services:
-  zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-    networks:
-      - kafka-kafdrop_default
-
-  kafka:
-    image: wurstmeister/kafka
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-    ports:
-      - "9092:9092"
-    depends_on:
-      - zookeeper
-    networks:
-      - kafka-kafdrop_default
-
   api-gateway:
     networks:
       - kafka-kafdrop_default
@@ -34,17 +13,14 @@ services:
       - ./api-gateway/.env
     depends_on:
       - mysql
-      - kafka
-
+  
   service-mailer:
     build:
       context: ./service-mailing
       dockerfile: Dockerfile
-    restart: "always"
+    restart: always
     networks:
       - kafka-kafdrop_default
-    depends_on:
-      - kafka
 
   service-command:
     networks:
@@ -54,7 +30,6 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - mysql
-      - kafka
 
   service-auth:
     networks:
@@ -75,7 +50,6 @@ services:
       - ./front-gallery:/app
       - /app/node_modules
     command: npm run dev
-
 
   mysql:
     image: mysql:latest
@@ -107,11 +81,10 @@ services:
       - mysql
     networks:
       - kafka-kafdrop_default
-
+  
 volumes:
   dbData:
 
 networks:
   kafka-kafdrop_default:
     external: true
-
