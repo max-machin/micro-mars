@@ -9,13 +9,13 @@ async function bootstrap() {
       transport: Transport.KAFKA,
       options: {
         client: {
-          brokers: ['kafka:9092'],
+          brokers: ['kafka:29092'],
           clientId: 'nestjs-consumer-client',
         },
         consumer: {
           groupId: 'auth-service-consumer',
-          heartbeatInterval: 3000, // Intervalle d'envoi des heartbeats
-          sessionTimeout: 10000, // Timeout de session pour la détection des échecs
+          heartbeatInterval: 3000,
+          sessionTimeout: 10000,
         },
       },
     },
