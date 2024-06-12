@@ -1,55 +1,41 @@
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
-import { Partitioners } from 'kafkajs';
+import { ConfigModule } from '@nestjs/config';
 
-console.log(process.env.KAFKA_BROKER);
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    ClientsModule.registerAsync([
+    ClientsModule.register([
       {
         name: 'COMMAND_SERVICE',
-        imports: [ConfigModule],
-        useFactory: async (configService: ConfigService) => ({
-          transport: Transport.KAFKA,
-          options: {
-            client: {
-              clientId: 'service-command',
-              brokers: [configService.get<string>('KAFKA_BROKER')],
-              createPartitioner: Partitioners.LegacyPartitioner,
-            },
-            consumer: {
-              groupId: 'service-command-consumer',
-            },
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'service-command',
+            brokers: ['kafka:29092'],
           },
-        }),
-        inject: [ConfigService],
+          consumer: {
+            groupId: 'service-command-consumer',
+          },
+        },
       },
       {
         name: 'AUTH_SERVICE',
-        imports: [ConfigModule],
-        useFactory: async (configService: ConfigService) => ({
-          transport: Transport.KAFKA,
-          options: {
-            client: {
-              clientId: 'auth-service',
-              brokers: [configService.get<string>('KAFKA_BROKER')],
-              createPartitioner: Partitioners.LegacyPartitioner,
-            },
-            consumer: {
-              groupId: 'auth-service-consumer',
-              heartbeatInterval: 3000,
-              sessionTimeout: 10000,
-            },
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'auth-service',
+            brokers: ['kafka:29092'],
           },
-        }),
-        inject: [ConfigService],
+          consumer: {
+            groupId: 'auth-service-consumer',
+          },
+        },
       },
     ]),
+    ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
   ],
   controllers: [AppController],
