@@ -16,8 +16,23 @@ export class ProductController {
     @Get('/gallery')
     async findAll(): Promise<any> {
         const dbProducts = await this.productService.findAllPopulated();
-        
+        console.log(dbProducts[0]);
+        const products = dbProducts.map(product => {
+            return {
+                product_id: product.id,
+                product_name: product.name,
+                price: product.price,
+                desc: product.desc,
+                category_id: product.category.id,
+                category_name: product.category.name,
+                exponent_name: product.exponent.name,
+                exponent_id: product.exponent.id,
+                exponent_picture: product.exponent.exponentAttachments[0].attachment_url,
+                product_pictures: product.productAttachments[0].attachment_url,
+            }
+        });
 
+        return products;
     }
 
     @Post('create')
