@@ -14,6 +14,10 @@ export class ProductService {
     return this.productRepository.find();
   }
 
+  findAllPopulated(): Promise<Product[]> {
+    return this.productRepository.find({ relations: ["exponent.exponentAttachments", "category", "productAttachments"] });
+  }
+
   create(productData: Product): Promise<Product> {
     return this.productRepository.save(productData);
   }

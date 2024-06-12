@@ -10,7 +10,14 @@ export class ProductController {
 
     @Get()
     index(): Promise<Product[]> {
-        return this.productService.findAll();
+        return this.productService.findAllPopulated();
+    }
+
+    @Get('/gallery')
+    async findAll(): Promise<any> {
+        const dbProducts = await this.productService.findAllPopulated();
+        
+
     }
 
     @Post('create')
