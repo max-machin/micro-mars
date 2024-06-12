@@ -12,7 +12,7 @@ export class AuthController {
     console.log(`Received message from Kafka: ${JSON.stringify(message)}`);
     try {
       await this.authService.processUserRegistration(
-        message.username,
+        message.firstname,
         message.email,
       );
       console.log(`User registration processed for ${message.username}`);
