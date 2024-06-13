@@ -91,4 +91,31 @@ export class AppService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  async getMe(userId: number): Promise<any> {
+    try {
+      const user = await this.userRepository.findOne({ where: { id: userId } });
+      if (!user) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      return user;
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching user: ' + error.message,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getAllUsers(): Promise<any> {
+    try {
+      const users = await this.userRepository.find();
+      return users;
+    } catch (error) {
+      throw new HttpException(
+        'Error fetching users: ' + error.message,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }

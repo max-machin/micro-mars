@@ -119,6 +119,18 @@ export class AuthService implements OnModuleInit {
     await this.userRepository.save(user);
     console.log(`User ${email} saved to database.`);
   }
+
+  async getMe(userId: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return this.userRepository.find();
+  }
 }
 
 
