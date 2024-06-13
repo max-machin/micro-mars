@@ -1,16 +1,45 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcryptjs';
+import { User } from './entities/user/user.entity';
+import { UserRole } from './entities/user-role/user-role.entity';
 
 @Injectable()
 export class AuthService {
-  private users: any[] = [];
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserRole)
+    private readonly userRoleRepository: Repository<UserRole>,
+  ) {}
 
   async processUserRegistration(
-    username: string,
+    firstname: string,
+    lastname: string,
     email: string,
+    password: string,
   ): Promise<void> {
-    const user = { username, email, registeredAt: new Date() };
-    this.users.push(user);
-    console.log(`User ${username} has been registered with email ${email}`);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Trouver le rôle par défaut
+    const defaultRole = await this.userRoleRepository.findOne({
+      where: { name: 'default' },
+    });
+    if (!defaultRole) {
+      throw new Error('Default role not found');
+    }
+
+    const user = this.userRepository.create({
+      firstname,
+      lastname,
+      email,
+      password: hashedPassword,
+      userRole: defaultRole, // Assigner le rôle par défaut
+    });
+
+    await this.userRepository.save(user);
+    console.log(`User ${email} saved to database.`);
   }
 }

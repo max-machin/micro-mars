@@ -55,5 +55,6 @@ import { ProductCategory } from '../entities/product-category/product-category.e
       ProductCategory,
     ]), 
   ],
+  exports: [TypeOrmModule], 
 })
 export class DatabaseModule {}

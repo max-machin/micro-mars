@@ -15,7 +15,8 @@ export class AppService {
     @Inject('COMMAND_SERVICE') private readonly commandClient: ClientKafka,
     @Inject('AUTH_SERVICE') private readonly kafkaClient: ClientKafka,
     private readonly jwtService: JwtService,
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
   getHello(): string {

@@ -13,12 +13,14 @@ export class AuthController {
     try {
       await this.authService.processUserRegistration(
         message.firstname,
+        message.lastname,
         message.email,
+        message.password,
       );
-      console.log(`User registration processed for ${message.username}`);
+      console.log(`User registration processed for ${message.email}`);
     } catch (error) {
       console.error(
-        `Error processing user registration for ${message.username}`,
+        `Error processing user registration for ${message.email}`,
         error.stack,
       );
     }

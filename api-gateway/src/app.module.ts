@@ -10,9 +10,10 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user/user.entity';
-console.log(process.env.JWT_SECRET);
+
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     ClientsModule.register([
       {
         name: 'COMMAND_SERVICE',
@@ -40,7 +41,6 @@ console.log(process.env.JWT_SECRET);
         },
       },
     ]),
-    ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
     TypeOrmModule.forFeature([User]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
