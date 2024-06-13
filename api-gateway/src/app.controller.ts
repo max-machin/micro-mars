@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Post, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards, Request, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateOrderRequest } from './create-order-request.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -40,5 +40,31 @@ export class AppController {
   @Post('protected')
   getHello(@Request() req): string {
     return `Hello ${req.user.email}`;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  async getMe(@Request() req) {
+    try {
+      return await this.appService.getMe(req.user.userId);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('users')
+  async getAllUsers() {
+    try {
+      return await this.appService.getAllUsers();
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 }

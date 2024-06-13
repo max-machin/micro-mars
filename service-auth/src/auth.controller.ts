@@ -1,7 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { Controller } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class AuthController {
