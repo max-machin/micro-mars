@@ -33,6 +33,7 @@ import { User } from './entities/user/user.entity';
         transport: Transport.KAFKA,
         options: {
           client: {
+            clientId: 'auth-service',
             brokers: ['kafka:29092'],
           },
           consumer: {

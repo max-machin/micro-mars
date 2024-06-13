@@ -19,7 +19,7 @@ import { UserRole } from './entities/user-role/user-role.entity';
         options: {
           client: {
             clientId: 'auth-service',
-            brokers: [process.env.KAFKA_BROKER],
+            brokers: ['kafka:29092'],
           },
           consumer: {
             groupId: 'auth-consumer',

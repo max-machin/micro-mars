@@ -6,9 +6,9 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { Command } from '../command/command.entity';
+import { Exponent } from '../exponent/exponent.entity';
 import { UserRole } from '../user-role/user-role.entity';
-import { Command } from '../command/command.entity'; 
-import { Exponent } from '../exponent/exponent.entity'; 
 
 @Entity()
 export class User {
