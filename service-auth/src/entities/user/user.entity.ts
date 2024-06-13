@@ -39,6 +39,6 @@ export class User {
   @OneToMany(() => Command, (command) => command.user)
   command: Command[];
 
-  @ManyToOne(() => UserRole, (userRole) => userRole.users, { nullable: true })
+  @ManyToOne(() => UserRole, (userRole) => userRole.users, { nullable: false })
   userRole: UserRole;
 }

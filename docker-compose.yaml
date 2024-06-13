@@ -25,7 +25,7 @@ services:
     build:
       context: ./service-mailing
       dockerfile: Dockerfile
-    restart: "always"
+    restart: always
     networks:
       - kafka-kafdrop_default
 
@@ -51,6 +51,8 @@ services:
     build:
       context: ./service-auth
       dockerfile: Dockerfile
+    env_file:
+      - ./service-auth/.env
     develop:
       watch:
         - action: sync
