@@ -16,7 +16,7 @@ import { ProductService } from "../product/product.service";
 // Request + event
 import { CreateOrderRequest } from "./create-order-request.dto";
 import { OrderCreatedEvent } from "./order-created.event";
-import { CommandPrice, CreateProductsFormatterDto, ProductFormatterDto } from "./order-formatter.dto";
+import { CreateProductsFormatterDto, ProductFormatterDto } from "./order-formatter.dto";
 
 @Controller('commands')
 export class CommandController {
@@ -62,27 +62,15 @@ export class CommandController {
         // Récupération des produits en base de données
         let commandProducts = await this.productService.findCommandProducts(productIds);
 
-        // Ajout de la nouvelle commande en base de données pour récupérer son Id => Utiliser dans commandProduct
-        let newCommand = await this.commandService.create(commandToCreate);
-
         // Tableaux de produits formatté pour le service mailing
         let productsFormatterDtos = [];
-        // Prix total de la commande
-        let totalPrice = 0;
 
         commandProducts.forEach(element => {
-
-            let newCommandProduct = new CommandProduct();
-
-            newCommandProduct.product = element;
-            newCommandProduct.command = newCommand;
 
             // On récupère la quantité du produit selon son id
             let quantity = productQuantities.get(element.id);
 
             if (quantity !== undefined) {
-
-                newCommandProduct.quantity = quantity;
 
                 // Création du DTO pour chaque produit
                 let productFormatterDto = new ProductFormatterDto();
@@ -91,26 +79,31 @@ export class CommandController {
                 productFormatterDto.price = element.price;
     
                 productsFormatterDtos.push(productFormatterDto);
-
-                // Calculer le prix total
-                totalPrice += element.price * quantity;
             }
-
-            // Ajout d'un commandProduct en base de données
-            this.commandProductService.create(newCommandProduct);
         });
 
         // Formatage du DTO pour le service mailing
         let createProductsFormatterDto = new CreateProductsFormatterDto();
         createProductsFormatterDto.products = productsFormatterDtos;
         createProductsFormatterDto.user = 'Max Machin';
-        createProductsFormatterDto.price = new CommandPrice();
-        createProductsFormatterDto.price.price = totalPrice;
 
         this.commandClient.emit(
             'order_created',
             new OrderCreatedEvent(createProductsFormatterDto)
         );
+
+        // Ajout de la nouvelle commande en base de données pour récupérer son Id => Utiliser dans commandProduct
+        // let newCommand = await this.commandService.create(commandToCreate);
+
+        // Ajout d'un commandProduct en base de données
+        // this.commandProductService.create(newCommandProduct);
+
+        // let newCommandProduct = new CommandProduct();
+
+        // newCommandProduct.product = element;
+        // newCommandProduct.command = newCommand;
+
+        // newCommandProduct.quantity = quantity;
 
     }
 

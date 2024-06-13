@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { Inject, Injectable } from '@nestjs/common';
-import { OrderCreatedEvent } from './order-created.event';
+import { CommandCreatedEvent, OrderCreatedEvent } from './order-created.event';
 import { ClientKafka } from '@nestjs/microservices';
+
 @Injectable()
 export class AppService {
   constructor(
@@ -12,8 +13,8 @@ export class AppService {
     return 'Hello World!';
   }
 
-  handleOrderCreated(orderCreatedEvent: OrderCreatedEvent){
-    console.log("orderCreated : " , orderCreatedEvent);
+  handleOrderCreated(orderCreatedEvent: OrderCreatedEvent, commandCreatedEvent: CommandCreatedEvent){
+    console.log("orderCreated : " , commandCreatedEvent);
   }
 
   createOrder(orderCreatedEvent: OrderCreatedEvent) {

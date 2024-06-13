@@ -11,3 +11,17 @@ export class OrderCreatedEvent {
     });
   }
 }
+
+export class CommandCreatedEvent {
+  constructor(
+    public readonly products: { productName: string; quantity: number; price: number }[],
+    public readonly user: string
+  ) {}
+
+  toSring() {
+    return JSON.stringify({
+      products: this.products,
+      user: this.user
+    })
+  }
+}

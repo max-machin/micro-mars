@@ -2,7 +2,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 import { EventPattern, Payload } from '@nestjs/microservices';
-import { OrderCreatedEvent } from './order-created.event';
+import { CommandCreatedEvent, OrderCreatedEvent } from './order-created.event';
 
 @Controller()
 export class AppController {
@@ -16,7 +16,8 @@ export class AppController {
   @EventPattern('order_created')
   handleOrderCreated(@Payload() data: any) {
     const orderCreatedEvent = new OrderCreatedEvent(data.userAuth, data.productsOrder);
-    console.log('Evénement reçu :', orderCreatedEvent);
-    this.appService.handleOrderCreated(orderCreatedEvent);
+    const commandCreatedEvent = new CommandCreatedEvent(data.data.products, data.data.user);
+    console.log('Evénement reçu :', JSON.stringify(data));
+    this.appService.handleOrderCreated(orderCreatedEvent, commandCreatedEvent);
   }
 }
