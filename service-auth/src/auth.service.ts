@@ -26,8 +26,16 @@ export class AuthService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    this.kafkaClient.subscribeToResponseOf('user_registered');
+    this.kafkaClient.subscribeToResponseOf('auth-topic');
     await this.kafkaClient.connect();
+  }
+
+  async validateUser(email: string, password: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return true;
+    }
+    return false;
   }
 
   async register(
@@ -38,7 +46,6 @@ export class AuthService implements OnModuleInit {
   ): Promise<any> {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Vérifier si l'utilisateur existe déjà
     const existingUser = await this.userRepository.findOne({
       where: { email },
     });
@@ -46,7 +53,6 @@ export class AuthService implements OnModuleInit {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    // Trouver le rôle par défaut
     const defaultRole = await this.userRoleRepository.findOne({
       where: { name: 'default' },
     });
@@ -57,19 +63,17 @@ export class AuthService implements OnModuleInit {
       );
     }
 
-    // Créer et sauvegarder l'utilisateur
     const user = this.userRepository.create({
       firstname,
       lastname,
       email,
       password: hashedPassword,
-      userRole: defaultRole, // Assigner le rôle par défaut
+      userRole: defaultRole,
     });
 
     await this.userRepository.save(user);
     console.log(`User ${email} saved to database.`);
 
-    // Emit user registration event to Kafka
     this.kafkaClient.emit('user_registered', {
       firstname,
       lastname,
@@ -84,9 +88,7 @@ export class AuthService implements OnModuleInit {
     const user = await this.userRepository.findOne({ where: { email } });
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload = { sub: user.id };
-      return {
-        access_token: this.jwtService.sign(payload),
-      };
+      return { access_token: this.jwtService.sign(payload) };
     }
     throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
   }
@@ -99,7 +101,6 @@ export class AuthService implements OnModuleInit {
   ): Promise<void> {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Trouver le rôle par défaut
     const defaultRole = await this.userRoleRepository.findOne({
       where: { name: 'default' },
     });
@@ -112,10 +113,12 @@ export class AuthService implements OnModuleInit {
       lastname,
       email,
       password: hashedPassword,
-      userRole: defaultRole, // Assigner le rôle par défaut
+      userRole: defaultRole,
     });
 
     await this.userRepository.save(user);
     console.log(`User ${email} saved to database.`);
   }
 }
+
+
