@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -8,14 +8,30 @@ import HeaderComponent from "./components/Header/HeaderComponent";
 import CardProductDetail from "./components/cardProductComponent/CardProductDetail";
 import { ContextMain, ContextMainProvider } from "./context/ContextMain";
 import PanierComponent from "./components/panier/PanierComponent";
+import { getProductsGallery } from "./services/productService";
 
 function App() {
-  const dataProduct = mocks.dataProduct;
+  //const dataProduct = mocks.dataProduct;
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [elementDetail, setElementDetail] = useState({});
 
+  //utilisatetion du service productService pour récupérer les produits
+  const [dataProduct, setDataProduct] = useState([]);
+
+  const getApiProductsGallery = async () => {
+    try {
+      const response = await getProductsGallery();
+      setDataProduct(response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getApiProductsGallery();
+  }, []);
+
   const onCardClick = (e) => {
-    console.log(e);
     if (!detailIsOpen) {
       setDetailIsOpen(true);
     }
@@ -23,7 +39,6 @@ function App() {
     setElementDetail(e);
 
     setTimeout(() => {
-      console.log("IS in timeout");
       // On transforme le style pour l'apliquer en modale
       setElementDetail((prevState) => ({
         ...prevState,
@@ -52,7 +67,7 @@ function App() {
         <h1>Gallery</h1>
         <p>Click on the cards to see more details</p>
       </div>
-      {/* <PanierComponent isOpen={false} /> */}
+      <PanierComponent isOpen={false} />
       {detailIsOpen && (
         <div
           className="modale-detail-product"
@@ -84,13 +99,14 @@ function App() {
       )}
 
       <div className="cardGallery">
-        {dataProduct.map((product, index) => (
-          <CardProduct
-            key={index}
-            product={product}
-            onCardClick={onCardClick}
-          />
-        ))}
+        {dataProduct.length > 0 &&
+          dataProduct.map((product, index) => (
+            <CardProduct
+              key={index}
+              product={product}
+              onCardClick={onCardClick}
+            />
+          ))}
       </div>
     </>
   );

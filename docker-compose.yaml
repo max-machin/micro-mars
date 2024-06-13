@@ -1,5 +1,5 @@
 name: micro-mars-services
-version: '3'
+version: "3"
 services:
   api-gateway:
     networks:
@@ -13,7 +13,14 @@ services:
       - ./api-gateway/.env
     depends_on:
       - mysql
-  
+    develop:
+      watch:
+        - action: sync
+          path: ./api-gateway
+          target: /usr/src/app
+          ignore:
+            - node_modules
+
   service-mailer:
     build:
       context: ./service-mailing
@@ -30,6 +37,13 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - mysql
+    develop:
+      watch:
+        - action: sync
+          path: ./service-command
+          target: /usr/src/app
+          ignore:
+            - node_modules
 
   service-auth:
     networks:
@@ -39,6 +53,14 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./service-auth/.env
+    develop:
+      watch:
+        - action: sync
+          path: ./service-auth
+          target: /usr/src/app
+          ignore:
+            - node_modules
+
   service-front-gallery:
     build:
       context: ./front-gallery
@@ -58,7 +80,7 @@ services:
       - "3306:3306"
     env_file:
       - ./api-gateway/.env
-    command: --init-file /data/application/init.sql  
+    command: --init-file /data/application/init.sql
     volumes:
       - dbData:/var/lib/mysql
       - ./api-gateway/init.sql:/data/application/init.sql
@@ -82,7 +104,7 @@ services:
       - mysql
     networks:
       - kafka-kafdrop_default
-  
+
 volumes:
   dbData:
 
