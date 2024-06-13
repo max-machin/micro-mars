@@ -10,6 +10,10 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user/user.entity';
+import { Product } from './entities/product/product.entity';
+import { ProductController } from './entities/product/product.controller';
+import { ProductService } from './entities/product/product.service';
+
 
 @Module({
   imports: [
@@ -43,7 +47,7 @@ import { User } from './entities/user/user.entity';
       },
     ]),
     DatabaseModule,
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Product]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -54,7 +58,7 @@ import { User } from './entities/user/user.entity';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService, JwtStrategy],
+  controllers: [AppController, ProductController],
+  providers: [AppService, JwtStrategy, ProductService],
 })
 export class AppModule {}
