@@ -36,7 +36,7 @@ services:
       context: ./service-command
       dockerfile: Dockerfile
     depends_on:
-      - mysql
+      - mongodb
     develop:
       watch:
         - action: sync
@@ -103,8 +103,18 @@ services:
     networks:
       - kafka-kafdrop_default
 
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - kafka-kafdrop_default
+    volumes:
+      - mongoData:/data/db
+
 volumes:
   dbData:
+  mongoData:
 
 networks:
   kafka-kafdrop_default:
