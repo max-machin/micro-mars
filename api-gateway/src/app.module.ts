@@ -4,6 +4,10 @@ import { AppService } from './app.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Product } from './entities/product/product.entity';
+import { ProductController } from './entities/product/product.controller';
+import { ProductService } from './entities/product/product.service';
 
 @Module({
   imports: [
@@ -23,9 +27,10 @@ import { ConfigModule } from '@nestjs/config';
       }
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
-    DatabaseModule, 
+    DatabaseModule,
+    TypeOrmModule.forFeature([Product])
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, ProductController],
+  providers: [AppService, ProductService],
 })
 export class AppModule {}  

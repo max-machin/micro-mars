@@ -1,38 +1,115 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useContext, useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import * as mocks from "./mocks/mockProducts";
+import CardProduct from "./components/cardProductComponent/CardProduct";
+import HeaderComponent from "./components/Header/HeaderComponent";
+import CardProductDetail from "./components/cardProductComponent/CardProductDetail";
+import { ContextMain, ContextMainProvider } from "./context/ContextMain";
+import PanierComponent from "./components/panier/PanierComponent";
+import { getProductsGallery } from "./services/productService";
 
 function App() {
-  const [count, setCount] = useState(0)
+  //const dataProduct = mocks.dataProduct;
+  const [detailIsOpen, setDetailIsOpen] = useState(false);
+  const [elementDetail, setElementDetail] = useState({});
+
+  //utilisatetion du service productService pour récupérer les produits
+  const [dataProduct, setDataProduct] = useState([]);
+
+  const getApiProductsGallery = async () => {
+    try {
+      const response = await getProductsGallery();
+      setDataProduct(response);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    getApiProductsGallery();
+  }, []);
+
+  const onCardClick = (e) => {
+    if (!detailIsOpen) {
+      setDetailIsOpen(true);
+    }
+
+    setElementDetail(e);
+
+    setTimeout(() => {
+      // On transforme le style pour l'apliquer en modale
+      setElementDetail((prevState) => ({
+        ...prevState,
+        position: {
+          ...prevState.position,
+          x: "10vw",
+          y: "10vh",
+          elementHeight: "calc(100% - 20vh)",
+          elementWidth: "calc(100% - 20vw)",
+        },
+      }));
+    }, 133);
+  };
+
+  const closeModale = (e) => {
+    //On s'assure que la propagation est au niveau de la modale est pas de son enfant CardProduct
+    if (e.target.className === "modale-detail-product") {
+      setDetailIsOpen(false);
+    }
+  };
 
   return (
     <>
-      <header>
-        <h1>Welcome to Vite + React!</h1>
-      </header>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <HeaderComponent />
+      <div className="hero-banner">
+        <h1>Gallery</h1>
+        <p>Click on the cards to see more details</p>
       </div>
-      <h1>Parfait on a terminé la mise à jour !</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HM
-        </p>
+      <PanierComponent isOpen={false} />
+      {detailIsOpen && (
+        <div
+          className="modale-detail-product"
+          style={{
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 100,
+          }}
+          onClick={(e) => closeModale(e)}
+        >
+          <CardProductDetail
+            product={elementDetail.product}
+            onCardClick={() => setDetailIsOpen(false)}
+            isDetail={true}
+            elementStyle={{
+              position: "absolute",
+              top: elementDetail.position.y,
+              left: elementDetail.position.x,
+              width: elementDetail.position.elementWidth,
+              height: elementDetail.position.elementHeight,
+              zIndex: 100,
+              cursor: "default",
+              overflow: "auto",
+            }}
+          />
+        </div>
+      )}
+
+      <div className="cardGallery">
+        {dataProduct.length > 0 &&
+          dataProduct.map((product, index) => (
+            <CardProduct
+              key={index}
+              product={product}
+              onCardClick={onCardClick}
+            />
+          ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

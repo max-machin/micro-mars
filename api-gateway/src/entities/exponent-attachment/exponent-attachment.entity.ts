@@ -9,7 +9,7 @@ export class ExponentAttachment {
     id: number;
 
     // Attributs 
-    @Column({length: 85, nullable: false, unique: true})
+    @Column({length: 255, nullable: false, unique: true})
     attachment_url: string;
 
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
