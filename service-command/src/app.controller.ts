@@ -15,9 +15,20 @@ export class AppController {
 
   @EventPattern('order_created')
   handleOrderCreated(@Payload() data: any) {
-    const orderCreatedEvent = new OrderCreatedEvent(data.userAuth, data.productsOrder);
-    const commandCreatedEvent = new CommandCreatedEvent(data.data.products, data.data.user);
-    console.log('Evénement reçu :', JSON.stringify(data));
-    this.appService.handleOrderCreated(orderCreatedEvent, commandCreatedEvent);
+
+    if (!data.data){
+      return 'Erreur, pas de données pour la commande.';
+    }
+
+    let commandProducts = data.data.products;
+    let totalPrice = 0
+
+    commandProducts.forEach(element => {
+      totalPrice += element.price * element.quantity
+    });
+
+    const commandCreatedEvent = new CommandCreatedEvent(data.data.products, data.data.user, totalPrice);
+    console.log('Evénement reçu :', commandCreatedEvent);
+    this.appService.handleOrderCreated(commandCreatedEvent);
   }
 }

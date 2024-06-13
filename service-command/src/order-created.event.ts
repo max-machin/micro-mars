@@ -15,13 +15,15 @@ export class OrderCreatedEvent {
 export class CommandCreatedEvent {
   constructor(
     public readonly products: { productName: string; quantity: number; price: number }[],
-    public readonly user: string
+    public readonly user: string,
+    public readonly price: number
   ) {}
 
   toSring() {
     return JSON.stringify({
       products: this.products,
-      user: this.user
+      user: this.user,
+      price: this.price
     })
   }
 }

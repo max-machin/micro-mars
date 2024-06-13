@@ -13,14 +13,18 @@ export class AppService {
     return 'Hello World!';
   }
 
-  handleOrderCreated(orderCreatedEvent: OrderCreatedEvent, commandCreatedEvent: CommandCreatedEvent){
+  handleOrderCreated( commandCreatedEvent: CommandCreatedEvent){
     console.log("orderCreated : " , commandCreatedEvent);
-  }
-
-  createOrder(orderCreatedEvent: OrderCreatedEvent) {
     this.mailingClient.emit(
       'order_created',
-      new OrderCreatedEvent(orderCreatedEvent.userAuth, orderCreatedEvent.productsOrder),
+      new CommandCreatedEvent(commandCreatedEvent.products, commandCreatedEvent.user, commandCreatedEvent.price),
     );
   }
+
+  // createOrder(orderCreatedEvent: OrderCreatedEvent) {
+  //   this.mailingClient.emit(
+  //     'order_created',
+  //     new OrderCreatedEvent(orderCreatedEvent.userAuth, orderCreatedEvent.productsOrder),
+  //   );
+  // }
 }
