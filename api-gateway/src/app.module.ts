@@ -8,6 +8,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './entities/product/product.entity';
 import { ProductController } from './entities/product/product.controller';
 import { ProductService } from './entities/product/product.service';
+import { Command } from './entities/command/command.entity';
+import { CommandProduct } from './entities/command-product/command-product.entity';
+import { CommandController } from './entities/command/command.controller';
+import { CommandService } from './entities/command/command.service';
+import { CommandProductService } from './entities/command-product/command-product.service';
 
 @Module({
   imports: [
@@ -28,9 +33,9 @@ import { ProductService } from './entities/product/product.service';
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
-    TypeOrmModule.forFeature([Product])
+    TypeOrmModule.forFeature([Product, Command, CommandProduct])
   ],
-  controllers: [AppController, ProductController],
-  providers: [AppService, ProductService],
+  controllers: [AppController, ProductController, CommandController],
+  providers: [AppService, ProductService, CommandService, CommandProductService],
 })
 export class AppModule {}  

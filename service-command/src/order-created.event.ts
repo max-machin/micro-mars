@@ -1,19 +1,29 @@
-/* eslint-disable prettier/prettier */
 export class OrderCreatedEvent {
-    constructor(
-      public readonly orderId: string,
-      public readonly userId: string,
-      public readonly email: string,
-      public readonly price: number,
-    ) {}
-  
-    toString() {
-      return JSON.stringify({
-        orderId: this.orderId,
-        userId: this.userId,
-        email: this.email,
-        price: this.price,
-      });
-    }
+  constructor(
+    public readonly userAuth: { userId: number },
+    public readonly productsOrder: { productId: number; quantity: number }[]
+  ) {}
+
+  toString() {
+    return JSON.stringify({
+      userAuth: this.userAuth,
+      productsOrder: this.productsOrder,
+    });
   }
-  
+}
+
+export class CommandCreatedEvent {
+  constructor(
+    public readonly products: { productName: string; quantity: number; price: number }[],
+    public readonly user: string,
+    public readonly price: number
+  ) {}
+
+  toSring() {
+    return JSON.stringify({
+      products: this.products,
+      user: this.user,
+      price: this.price
+    })
+  }
+}
