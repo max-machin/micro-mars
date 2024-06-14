@@ -6,7 +6,7 @@ import { MailingService } from './app.service';
 export class MailingController {
   constructor(private mailingService: MailingService) {}
 
-  @EventPattern('order_created')
+  @EventPattern('command_created')
   async handleEmailSending(@Payload() message: any) {
     console.log(`Received message from Kafka: ${JSON.stringify(message)}`);
     try {
