@@ -1,26 +1,14 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CommandModule } from './command/command.module'; // Assurez-vous d'importer CommandModule
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
-    ClientsModule.register([
-      {
-        name: 'MAILING_SERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            brokers: ['kafka:29092'],
-            clientId: 'mailing',
-          },
-          consumer: {
-            groupId: 'mailing-consumer',
-          },
-        },
-      },
-    ]),
+    MongooseModule.forRoot('mongodb://mongodb:27017/micro-mars-general-db'),
+    CommandModule,
   ],
   controllers: [AppController],
   providers: [AppService],

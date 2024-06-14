@@ -7,7 +7,6 @@ import { CommandService } from "./command.service";
 import { Command } from "./command.entity";
 
 // Command Product
-import { CommandProduct } from "../command-product/command-product.entity";
 import { CommandProductService } from "../command-product/command-product.service";
 
 // Product
@@ -74,6 +73,7 @@ export class CommandController {
 
                 // Création du DTO pour chaque produit
                 let productFormatterDto = new ProductFormatterDto();
+                productFormatterDto.productId = element.id;
                 productFormatterDto.productName = element.name;
                 productFormatterDto.quantity = quantity;
                 productFormatterDto.price = element.price;
@@ -82,7 +82,7 @@ export class CommandController {
             }
         });
 
-        // Formatage du DTO pour le service mailing
+        // Formatage pour le service command
         let createProductsFormatterDto = new CreateProductsFormatterDto();
         createProductsFormatterDto.products = productsFormatterDtos;
         createProductsFormatterDto.user = 'Max Machin';
@@ -91,19 +91,6 @@ export class CommandController {
             'order_created',
             new OrderCreatedEvent(createProductsFormatterDto)
         );
-
-        // Ajout de la nouvelle commande en base de données pour récupérer son Id => Utiliser dans commandProduct
-        // let newCommand = await this.commandService.create(commandToCreate);
-
-        // Ajout d'un commandProduct en base de données
-        // this.commandProductService.create(newCommandProduct);
-
-        // let newCommandProduct = new CommandProduct();
-
-        // newCommandProduct.product = element;
-        // newCommandProduct.command = newCommand;
-
-        // newCommandProduct.quantity = quantity;
 
     }
 
