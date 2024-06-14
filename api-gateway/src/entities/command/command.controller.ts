@@ -85,7 +85,7 @@ export class CommandController {
         // Formatage pour le service command
         let createProductsFormatterDto = new CreateProductsFormatterDto();
         createProductsFormatterDto.products = productsFormatterDtos;
-        createProductsFormatterDto.user = 'Max Machin';
+        createProductsFormatterDto.user = 'alizeamasse@gmail.com';
 
         this.commandClient.emit(
             'order_created',
