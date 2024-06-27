@@ -15,10 +15,4 @@ export class CommandService {
     findAllPopulated(): Promise<Command[]> {
         return this.commandRepository.find({ relations: ["user", "category", "productAttachments"] });
     }
-
-    create(commandData: Command): Promise<Command> {
-        console.log('je suis dans le service app api-gateway : ' + commandData);
-
-        return this.commandRepository.save(commandData);
-    }
 }

@@ -2,7 +2,7 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { CommandService } from './command.service';
 import { CreateCommandDto } from './dto/create-command.dto';
 import { Command } from './schemas/command.schema';
-import { EventPattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import { CommandCreatedEvent } from 'src/order-created.event';
 
 @Controller('commands')
@@ -16,7 +16,7 @@ export class CommandController {
     return this.commandService.create(createCommandDto);
   }
 
-  @EventPattern('order_created')
+  @MessagePattern('order_created')
   async handleOrderCreated(@Payload() data: any) {
 
     // Check des données de la commande

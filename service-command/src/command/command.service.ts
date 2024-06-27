@@ -23,7 +23,7 @@ export class CommandService {
   }
 
   handleOrderCreated( commandCreatedEvent: CommandCreatedEvent){
-    
+  
     this.mailingClient.emit(
       'command_created',
       new CommandCreatedEvent(
@@ -32,5 +32,11 @@ export class CommandService {
         commandCreatedEvent.price, 
         commandCreatedEvent.commandId).toSring(),
     );
+
+    return new CommandCreatedEvent(
+      commandCreatedEvent.products, 
+      commandCreatedEvent.user, 
+      commandCreatedEvent.price, 
+      commandCreatedEvent.commandId).toSring();
   }
 }

@@ -6,7 +6,6 @@ export class OrderCreatedEvent {
   ) {}
 
   toString() {
-    console.log('je suis dans levent');
     return JSON.stringify({
       data: this.createProductsFormatterDto 
     });

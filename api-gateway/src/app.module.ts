@@ -27,7 +27,10 @@ import { CommandProductService } from './entities/command-product/command-produc
           },
           consumer: {
             groupId: 'service-command-consumer'
-          }
+          },
+          producer: {
+            allowAutoTopicCreation: true,
+          },
         }
       }
     ]),

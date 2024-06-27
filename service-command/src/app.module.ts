@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { CommandModule } from './command/command.module'; // Assurez-vous d'importer CommandModule
+import { CommandModule } from './command/command.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
