@@ -13,6 +13,9 @@ import { CommandProduct } from './entities/command-product/command-product.entit
 import { CommandController } from './entities/command/command.controller';
 import { CommandService } from './entities/command/command.service';
 import { CommandProductService } from './entities/command-product/command-product.service';
+import { User } from './entities/user/user.entity';
+import { UserController } from './entities/user/user.controller';
+import { UserService } from './entities/user/user.service';
 
 @Module({
   imports: [
@@ -32,13 +35,29 @@ import { CommandProductService } from './entities/command-product/command-produc
             allowAutoTopicCreation: true,
           },
         }
+      },
+      {
+        name: 'USER_SERVICE' ,
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'service-user',
+            brokers: ['kafka:29092'],
+          },
+          consumer: {
+            groupId: 'service-user-consumer'
+          },
+          producer: {
+            allowAutoTopicCreation: true
+          }
+        }
       }
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,
-    TypeOrmModule.forFeature([Product, Command, CommandProduct])
+    TypeOrmModule.forFeature([Product, Command, CommandProduct, User])
   ],
-  controllers: [AppController, ProductController, CommandController],
-  providers: [AppService, ProductService, CommandService, CommandProductService],
+  controllers: [AppController, ProductController, CommandController, UserController],
+  providers: [AppService, ProductService, CommandService, CommandProductService, UserService],
 })
 export class AppModule {}  
