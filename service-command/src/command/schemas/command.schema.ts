@@ -7,6 +7,9 @@ export class Command extends Document {
   @Prop()
   user: string;
 
+  @Prop()
+  status: number;
+
   @Prop([{ type: CommandProductSchema }])
   commandProduct: CommandProduct[];
 }

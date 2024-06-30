@@ -29,6 +29,20 @@ services:
     networks:
       - kafka-kafdrop_default
 
+  service-payment:
+    build:
+      context: ./service-payment
+      dockerfile: Dockerfile
+    networks:
+      - kafka-kafdrop_default
+    develop:
+      watch:
+        - action: sync
+          path: ./service-payment
+          target: /usr/src/app
+          ignore:
+            - node_modules
+
   service-command:
     networks:
       - kafka-kafdrop_default

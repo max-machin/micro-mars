@@ -8,11 +8,17 @@ import { CreateOrderRequest } from "./create-order-request.dto";
 import { OrderCreatedEvent } from "./order-created.event";
 import { CreateProductsFormatterDto, ProductFormatterDto } from "./order-formatter.dto";
 import { UserService } from "../user/user.service";
+import { createPaymentRequest } from "./payment/create-payment-request.dto";
+import { PaymentCreatedEvent } from "./payment/payment-created.event";
+import { OrderUpdatedEvent } from "./order-updated.event";
+import { FindProductsIdEvent, IsOrderdeliveredRequest } from "./delivery/order-delivered-request.dto";
 
 @Controller('commands')
 export class CommandController implements OnModuleInit {
     constructor(
         @Inject('COMMAND_SERVICE') private readonly commandClient: ClientKafka,
+        @Inject('PAYMENT_SERVICE') private readonly paymentClient: ClientKafka,
+
         private commandService: CommandService,
         private productService: ProductService,
         private userService: UserService
@@ -25,10 +31,14 @@ export class CommandController implements OnModuleInit {
 
     onModuleInit() {
         this.commandClient.subscribeToResponseOf('order_created');
+        this.commandClient.subscribeToResponseOf('updated_command');
+        this.paymentClient.subscribeToResponseOf('payment_created');
+        this.commandClient.subscribeToResponseOf('find_products_id');
     }
 
     @Post('/order')
     async createOrder(@Body() createOrderRequest: CreateOrderRequest): Promise<any> {
+
         let userAuth = createOrderRequest.userAuth;
 
         try {
@@ -102,15 +112,16 @@ export class CommandController implements OnModuleInit {
                     Produits de la commande : 
                         ${newCommandProducts}
                     Prix total de la commande : ${command.price}€.
+                    Status de la commande : ${command.status}
                     `);  
                     
-                    commandProducts.forEach(element => {
-                        let quantity = productQuantities.get(element.id);
-                        // Mise à jour du stock
-                        element.stock -= quantity;
-                        this.productService.update(element);
-                        console.log(`Stock du produit : ${element.name} mis à jour.`);
-                    })
+                    // commandProducts.forEach(element => {
+                    //     let quantity = productQuantities.get(element.id);
+                    //     // Mise à jour du stock
+                    //     element.stock -= quantity;
+                    //     this.productService.update(element);
+                    //     console.log(`Stock du produit : ${element.name} mis à jour.`);
+                    // })
                 }
             });
 
@@ -118,5 +129,81 @@ export class CommandController implements OnModuleInit {
             console.error(error);
             throw new Error("Erreur lors de l'authentification de l'utilisateur.");
         }
+    }
+
+    @Post('/payment')
+    async createOrderPayment(@Body() createPaymentRequest: createPaymentRequest): Promise<any>{
+        
+        let userAuth = createPaymentRequest.userAuth;
+        let command = createPaymentRequest.command
+
+        try {
+            let authUser = await this.userService.findOneById(userAuth);
+
+            this.paymentClient.send('payment_created', new PaymentCreatedEvent(authUser, command))
+            .subscribe(
+                (payment) => {
+                    console.log(payment);
+                    if (!payment){
+                        return 'Une erreur est survenue lors du paiement de la commande.'
+                    }
+
+                    this.commandClient.send(
+                        'updated_command', 
+                        new OrderUpdatedEvent(payment, createPaymentRequest.command.commandId)
+                    ).subscribe(
+                        (command) => {
+                            if (!command){
+                                return "Un problème est survenu lors du paiement de la commande."
+                            }
+
+                        }
+                    )
+                }
+            )
+        
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erreur lors de l'authentification de l'utilisateur.");
+        }
+    }
+
+    @Post('/delivered')
+    async isOrderDelivered(@Body() isOrderDeliveredRequest: IsOrderdeliveredRequest){
+        this.commandClient.send(
+            'find_products_id', 
+            new FindProductsIdEvent(isOrderDeliveredRequest.commandId)
+        ).subscribe(
+            async (command) => {
+                if (!command){
+                    return "Une erreur est survenue dans la livraison."
+                }
+                console.log(command);
+
+                // Produits 
+                let productIds = [];
+                // Utiliser pour stocker les quantités par productId, utile pour ensuite get la quantité selon l'id 
+                let productQuantities = new Map(); 
+
+                command.forEach(element => {
+                    productIds.push(element.productId);
+                    if (element.quantity == 0){
+                        return
+                    }
+                    productQuantities.set(element.productId, element.quantity); 
+                });
+
+                let commandProducts = await this.productService.findCommandProducts(productIds);
+
+                commandProducts.forEach(element => {
+                    let quantity = productQuantities.get(element.id);
+                    // Mise à jour du stock
+                    element.stock -= quantity;
+                    this.productService.update(element);
+                    console.log(`Stock du produit : ${element.name} mis à jour. : ` + element.stock);
+                })
+
+            }
+        )
     }
 }

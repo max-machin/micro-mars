@@ -44,19 +44,36 @@ export class CommandController {
         quantity: product.quantity,
         price: product.price,
       })),
+      status: 0
     };
 
     try {
       // Création de la commande
       let createdCommand = await this.commandService.create(createCommandDto);
       // Formattage de la data pour le service mailer
-      const commandCreatedEvent = new CommandCreatedEvent(data.data.products, data.data.user, totalPrice, createdCommand.id);
+      const commandCreatedEvent = new CommandCreatedEvent(data.data.products, data.data.user, totalPrice, createdCommand.id, createdCommand.status);
       // Si il y a une commande crée alors on envoie la donnée au service de mail
       if (commandCreatedEvent && createdCommand){
         return this.commandService.handleOrderCreated(commandCreatedEvent);
       }
     } catch (error) {
       console.error('Erreur lors de la création de la commande :', error.message);
+    }
+  }
+
+  @MessagePattern('updated_command')
+  async HandleUpdateOrder(@Payload() data: any) {
+    return this.commandService.updateCommand(data.commandId)
+  }
+
+  @MessagePattern('find_products_id')
+  async handleFindProductsId(@Payload() data: any) {
+    try {
+      const commandId = data.commandId;
+      const command = await this.commandService.findCommand(commandId);
+      return command.commandProduct;
+    } catch (error) {
+      throw new Error(`Erreur lors de la recherche de la commande : ${error.message}`);
     }
   }
 }

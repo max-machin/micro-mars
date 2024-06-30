@@ -17,7 +17,8 @@ export class CommandCreatedEvent {
     public readonly products: { productId: number, productName: string; quantity: number; price: number }[],
     public readonly user: string,
     public readonly price: number,
-    public readonly commandId: string
+    public readonly commandId: string,
+    public readonly status: number
   ) {}
 
   toSring() {
@@ -25,7 +26,8 @@ export class CommandCreatedEvent {
       products: this.products,
       user: this.user,
       price: this.price,
-      commandId: this.commandId
+      commandId: this.commandId,
+      status: this.status
     })
   }
 }

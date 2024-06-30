@@ -16,6 +16,9 @@ export class Command {
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
     delivery_date: string;
 
+    @Column({ type: "int", default: 0 })
+    status: number;
+
     // Relations 
     /**
      * Many to many custom entre les commandes et les produits permettant d'historiser les produits de la commande

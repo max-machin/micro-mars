@@ -22,6 +22,15 @@ export class CommandService {
     return this.commandModel.find().exec();
   }
 
+  async findCommand(id: string): Promise<Command> {
+    try {
+      const command = await this.commandModel.findById(id);
+      return command;
+    } catch (error) {
+      throw new Error(`Erreur lors de la recherche de la commande : ${error.message}`);
+    }
+  }
+
   handleOrderCreated( commandCreatedEvent: CommandCreatedEvent){
   
     this.mailingClient.emit(
@@ -30,13 +39,20 @@ export class CommandService {
         commandCreatedEvent.products, 
         commandCreatedEvent.user, 
         commandCreatedEvent.price, 
-        commandCreatedEvent.commandId).toSring(),
+        commandCreatedEvent.commandId,
+        commandCreatedEvent.status).toSring(),
     );
 
     return new CommandCreatedEvent(
       commandCreatedEvent.products, 
       commandCreatedEvent.user, 
       commandCreatedEvent.price, 
-      commandCreatedEvent.commandId).toSring();
+      commandCreatedEvent.commandId,
+      commandCreatedEvent.status).toSring();
+  }
+
+  async updateCommand(commandId: number): Promise<Command>{
+    const updatedCommand = await this.commandModel.findByIdAndUpdate(commandId, {status: 1} , {new: true})
+    return updatedCommand
   }
 }
