@@ -51,6 +51,22 @@ import { UserService } from './entities/user/user.service';
             allowAutoTopicCreation: true
           }
         }
+      },
+      {
+        name: 'PAYMENT_SERVICE' ,
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            clientId: 'service-payment',
+            brokers: ['kafka:29092'],
+          },
+          consumer: {
+            groupId: 'service-payment-consumer'
+          },
+          producer: {
+            allowAutoTopicCreation: true
+          }
+        }
       }
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
