@@ -3,6 +3,8 @@
  * et le système de paiement
  */
 import { createContext, useMemo, useState } from "react";
+//Création d'un service pour gérer les appels à l'API de produits
+import apiClient from "../axios-manager/apiClient";
 
 const ContextMain = createContext();
 
@@ -36,6 +38,29 @@ const ContextMainProvider = ({ children }) => {
   const getProducts = () => {
     return orderProducts;
   };
+
+  const handleCreateOrder = async () => {
+      let productFormatterArray = {
+        userAuth: {},
+        productsOrder: []
+      }
+      orderProducts.map((item) => {
+        let productFormat = {
+          productId: item.product.product_id,
+          quantity: item.nbProduct
+        }
+        productFormatterArray.productsOrder.push(productFormat);
+      })
+
+      try {
+        let test = await apiClient.post("/commands/order", 
+          productFormatterArray
+        )
+        return test
+      } catch (error) {
+        throw error;
+      }  
+  }
 
   const addQuantityOfProduct = (product) => {
     console.log("ADD QUANTITY OF PRODUCT", product);
@@ -125,6 +150,7 @@ const ContextMainProvider = ({ children }) => {
         payment,
         resetPayment,
         getNbProducts,
+        handleCreateOrder
       }}
     >
       {children}

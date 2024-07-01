@@ -172,3 +172,13 @@
   justify-content: end;
   align-items: center;
 }
+
+.valid-command-popup {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background-color: #333;
+  padding: 15px 32px;
+}

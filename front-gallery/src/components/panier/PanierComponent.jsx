@@ -24,6 +24,7 @@ const PanierComponent = (isOpen) => {
   const [totalProducts, setTotalProducts] = React.useState(0);
   const [isConnected, setIsConnected] = React.useState(false);
   const [fillSvg, setFillSvg] = React.useState("#35603a");
+  const [isOrderCreated, setIsOrderCreated] = React.useState(false)
 
   const SvgHeartPanier = ({ fill = "#000000", height = 200, width = 200 }) => {
     const [fillColor, setFillColor] = React.useState(fill);
@@ -60,7 +61,30 @@ const PanierComponent = (isOpen) => {
     setPanierIsOpen(!panierIsOpen);
   };
 
+  const manageOrderCreated = async () => {
+    
+    let commandStatus = await useMainContext.handleCreateOrder(useMainContext.getProducts()).then(resp => {return resp.data})
+
+    if (commandStatus === true){
+      
+      setIsOrderCreated(commandStatus)
+
+      setTimeout(() => {
+        useMainContext.clearOrder()
+        handlePanier()
+        setIsOrderCreated(false)
+      }, 3000);
+    }
+  }
+
   return (
+    <>
+    {
+      isOrderCreated &&
+      <div className="valid-command-popup">
+        <p>Votre commande a bien été enregistré.</p>
+      </div>
+    }
     <div className="panier background-element">
       <div className="header-panier">
         <div className="header-h3-panier">
@@ -151,11 +175,12 @@ const PanierComponent = (isOpen) => {
             >
               Vider le panier
             </button>
-            <button className="button-primary">Commander</button>
+            <button className="button-primary" onClick={() => manageOrderCreated()}>Commander</button>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

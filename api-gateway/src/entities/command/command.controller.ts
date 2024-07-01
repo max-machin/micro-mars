@@ -38,7 +38,7 @@ export class CommandController implements OnModuleInit {
 
     @Post('/order')
     async createOrder(@Body() createOrderRequest: CreateOrderRequest): Promise<any> {
-
+        
         let userAuth = createOrderRequest.userAuth;
 
         try {
@@ -125,6 +125,8 @@ export class CommandController implements OnModuleInit {
                 }
             });
 
+
+            return true
         } catch (error) {
             console.error(error);
             throw new Error("Erreur lors de l'authentification de l'utilisateur.");
@@ -202,7 +204,6 @@ export class CommandController implements OnModuleInit {
                     this.productService.update(element);
                     console.log(`Stock du produit : ${element.name} mis à jour. : ` + element.stock);
                 })
-
             }
         )
     }
