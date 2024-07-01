@@ -14,9 +14,15 @@ function App() {
   //const dataProduct = mocks.dataProduct;
   const [detailIsOpen, setDetailIsOpen] = useState(false);
   const [elementDetail, setElementDetail] = useState({});
+  const [modalConnexionIsOpen, setModalConnexionIsOpen] = useState(false);
 
   //utilisatetion du service productService pour récupérer les produits
   const [dataProduct, setDataProduct] = useState([]);
+
+  function handlOpenModalConexion(e) {
+    console.log("ON CLICK");
+    setModalConnexionIsOpen(true);
+  }
 
   const getApiProductsGallery = async () => {
     try {
@@ -62,11 +68,34 @@ function App() {
 
   return (
     <>
-      <HeaderComponent />
+      <HeaderComponent handlOpenModalConexion={handlOpenModalConexion} />
       <div className="hero-banner">
         <h1>Gallery</h1>
         <p>Click on the cards to see more details</p>
       </div>
+      {modalConnexionIsOpen && (
+        <div className="modale-connexion">
+          <div className="modale-connexion-content">
+            <div className="modale-connexion-header">
+              <h2>Connexion</h2>
+              <button onClick={() => setModalConnexionIsOpen(false)}>x</button>
+            </div>
+            <form>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" />
+              </div>
+              <button type="submit"
+              onSubmit={}
+              >Se connecter</button>
+            </form>
+          </div>
+        </div>
+      )}
       <PanierComponent isOpen={false} />
       {detailIsOpen && (
         <div

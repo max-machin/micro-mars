@@ -151,7 +151,14 @@ const PanierComponent = (isOpen) => {
             >
               Vider le panier
             </button>
-            <button className="button-primary">Commander</button>
+            <button
+              className="button-primary"
+              onClick={() => {
+                console.log(useMainContext.getProducts());
+              }}
+            >
+              Commander
+            </button>
           </div>
         </div>
       </div>

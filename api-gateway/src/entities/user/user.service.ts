@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientKafka } from "@nestjs/microservices";
 import { GetUserEvent } from "./get-user.event";
-import { UserAuthDto } from "./get-user-request.dto";
+import { UserAskDto, UserAuthDto } from "./get-user-request.dto";
 
 @Injectable()
 export class UserService {
@@ -39,5 +39,21 @@ export class UserService {
                 resolve(user);
             });
         });
+    }
+
+    async create(user: User): Promise<User> {
+        return this.userRepository.save(user);
+    }
+
+    async update(user: User): Promise<User> {
+        return this.userRepository.save(user);
+    }
+
+    async authUser(userAuth: UserAuthDto): Promise<User> {
+        return this.findOneById(userAuth);
+    }
+
+    async findOneByEmail(userAsk: UserAskDto): Promise<User> {
+        return this.userRepository.findOne({email: userAsk.email});
     }
 }

@@ -124,6 +124,61 @@
   background: transparent;
 }
 
+.modale-connexion {
+  position: fixed;
+  z-index: 9000;
+  background-color: #00000049;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: alias;
+  width: 100%;
+  height: 100%;
+}
+
+.modale-connexion-content {
+  background-color: #ffffff33;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.modale-connexion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modale-connexion-header h2 {
+  margin: 0;
+}
+
+.modale-connexion-header button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modale-connexion-header button:hover {
+  background-color: #ffffff66;
+}
+
+.modale-connexion-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

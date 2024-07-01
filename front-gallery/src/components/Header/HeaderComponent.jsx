@@ -4,8 +4,9 @@ import React from "react";
 import "./HeaderStyle.css";
 import reactLogo from "../../../public/micro-mars_logo.svg";
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ handlOpenModalConexion }) => {
   const [isConnectd, setIsConnected] = React.useState(false);
+
   return (
     <header id="headerApp">
       <div>
@@ -17,7 +18,9 @@ const HeaderComponent = () => {
       <div>
         {!isConnectd ? (
           <>
-            <button>Connexion</button>
+            <button onClick={(e) => handlOpenModalConexion(e)}>
+              Connexion
+            </button>
           </>
         ) : (
           <>

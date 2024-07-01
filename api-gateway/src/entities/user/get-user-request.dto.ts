@@ -6,4 +6,9 @@ export class UserAuthDto {
 export class GetUserRequest {
     userAuth: UserAuthDto;
 }
+
+export class UserAskDto {
+    email : string;
+    password : string;
+}
     
