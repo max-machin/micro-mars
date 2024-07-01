@@ -89,7 +89,7 @@ export class CommandController implements OnModuleInit {
             // Formatage pour le service command
             let createProductsFormatterDto = new CreateProductsFormatterDto();
             createProductsFormatterDto.products = productsFormatterDtos;
-            createProductsFormatterDto.user = authUser.firstname + ' ' + authUser.lastname;
+            createProductsFormatterDto.user = authUser.email;
 
             // Envoi de l'event au micro-service de commande
             this.commandClient.send(
