@@ -10,6 +10,15 @@ const ContextMainProvider = ({ children }) => {
   const [orderProducts, setOrderProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isPayment, setIsPayment] = useState(false);
+  const [user, setUser] = useState({});
+
+  const getUserInfo = () => {
+    return user;
+  };
+
+  const setUserInfo = (userInfo) => {
+    return setUser(userInfo);
+  };
 
   const addProductToOrder = (product, nbProduct) => {
     const productIsInOrder = orderProducts.find(
@@ -125,6 +134,8 @@ const ContextMainProvider = ({ children }) => {
         payment,
         resetPayment,
         getNbProducts,
+        getUserInfo,
+        setUserInfo,
       }}
     >
       {children}
