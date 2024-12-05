@@ -36,7 +36,9 @@ services:
       context: ./service-command
       dockerfile: Dockerfile
     depends_on:
-      - mysql
+      - mongodb
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/micro-mars-general-db
     develop:
       watch:
         - action: sync
@@ -103,8 +105,20 @@ services:
     networks:
       - kafka-kafdrop_default
 
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    networks:
+      - kafka-kafdrop_default
+    depends_on:
+      - mysql
+    volumes:
+      - mongoData:/data/db
+
 volumes:
   dbData:
+  mongoData:
 
 networks:
   kafka-kafdrop_default:

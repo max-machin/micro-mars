@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Not, Repository } from 'typeorm';
 import { Product } from './product.entity';
 
 @Injectable()
@@ -32,5 +32,14 @@ export class ProductService {
 
   delete(id: number): Promise<any> {
     return this.productRepository.delete(id);
+  }
+
+  findCommandProducts(arrayId: number[]): Promise<any> {
+     return this.productRepository.find({
+        where: {
+          id: In(arrayId),
+          stock: Not(0)
+        }
+     })
   }
 }
